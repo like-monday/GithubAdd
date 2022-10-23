@@ -69,7 +69,6 @@ onMounted(() => {
             for (let i = 0; i < 10; i++) {
                 list_web[i] = res.data.list[i]
             }
-            console.log(list_web);
         }
     })
     axios({
@@ -80,7 +79,6 @@ onMounted(() => {
             for (let i = 0; i < 10; i++) {
                 list_dy[i] = res.data.list[i]
             }
-            console.log(list_web);
         }
     })
     axios({

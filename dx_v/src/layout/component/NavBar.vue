@@ -29,6 +29,9 @@ import {  } from 'vue'
  
 <style lang = "less" scoped>
   .navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
     box-sizing: border-box;
     padding: 0 50px;
     width: 100%;
