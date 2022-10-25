@@ -186,7 +186,7 @@
           <div id="grade"></div>
         </div>
         <!-- 招聘看板 -->
-        <div v-if="false" class="training">
+        <div v-show="false" class="training">
           <div class="gradient">招聘看板</div>
           <div id="recruitment1"></div>
           <div class="line"></div>
