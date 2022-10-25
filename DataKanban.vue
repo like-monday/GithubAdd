@@ -14,13 +14,8 @@
           <div class="size">
             <span>厂区：</span>
             <el-select v-model="size_value" placeholder="请选择" class="upsize">
-              <el-option
-                v-for="item in op_size"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-                style="boder: none"
-              >
+              <el-option v-for="item in op_size" :key="item.value" :label="item.label" :value="item.value"
+                style="boder: none">
               </el-option>
             </el-select>
           </div>
@@ -34,15 +29,8 @@
           <div class="line"></div>
           <div class="rest">
             <div class="date">
-              <el-date-picker
-                class="picker_date"
-                v-model="rest_date"
-                value-format="yyyy-MM-dd"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              >
+              <el-date-picker class="picker_date" v-model="rest_date" value-format="yyyy-MM-dd" type="daterange"
+                range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
               </el-date-picker>
             </div>
             <div class="rest_c"></div>
@@ -72,29 +60,11 @@
             </div>
             <div class="qq">缺勤详情</div>
             <div class="queqing">
-              <el-table
-                :data="tableData"
-                height="220"
-                size="mini"
-                border
-                :header-cell-style="{ background: '#17a9a8' }"
-                :row-class-name="tableRowClassName"
-                id="success"
-                style="width: 100%; color: #fff"
-              >
-                <el-table-column
-                  prop="date"
-                  label="工号"
-                  min-width="50"
-                  align="center"
-                >
+              <el-table :data="tableData" height="220" size="mini" border :header-cell-style="{ background: '#17a9a8' }"
+                :row-class-name="tableRowClassName" id="success" style="width: 100%; color: #fff">
+                <el-table-column prop="date" label="工号" min-width="50" align="center">
                 </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="姓名"
-                  align="center"
-                  min-width="50"
-                >
+                <el-table-column prop="name" label="姓名" align="center" min-width="50">
                 </el-table-column>
                 <el-table-column prop="address" label="缺勤類型" align="center">
                 </el-table-column>
@@ -103,17 +73,9 @@
           </div>
           <div class="week">
             <div class="date">
-              <el-date-picker
-                v-model="week_date"
-                style="width: 220px"
-                type="daterange"
-                size="small"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                value-format="yyyy-MM-dd"
-                :picker-options="pickerOptions"
-                class="picker_date"
-              />
+              <el-date-picker v-model="week_date" style="width: 220px" type="daterange" size="small"
+                start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"
+                :picker-options="pickerOptions" class="picker_date" />
             </div>
             <div id="attendance_c"></div>
           </div>
@@ -190,15 +152,8 @@
         <!-- 彩色标题 -->
         <div class="gradient">员工之声</div>
         <div class="date">
-          <el-date-picker
-            class="picker_date2"
-            v-model="employeEvoice_date"
-            value-format="yyyy-MM-dd"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          >
+          <el-date-picker class="picker_date2" v-model="employeEvoice_date" value-format="yyyy-MM-dd" type="daterange"
+            range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
           </el-date-picker>
         </div>
         <div id="employeEvoice_c"></div>
@@ -210,25 +165,28 @@
     <div class="aggregate_four">
       <div class="left">
         <!-- 奖惩看板 -->
-        <div class="rewards">
+        <div v-if="false" id="rewards">
           <div class="gradient">奖惩看板</div>
           <div class="date">
-            <el-date-picker
-              class="picker_date2"
-              v-model="rewards_date"
-              value-format="yyyy-MM-dd"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            >
+            <el-date-picker class="picker_date2" v-model="rewards_date" value-format="yyyy-MM-dd" type="daterange"
+              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+            </el-date-picker>
+          </div>
+          <div id="category"></div>
+          <div id="grade"></div>
+        </div>
+        <div v-else class="rewards">
+          <div class="gradient">奖惩看板</div>
+          <div class="date">
+            <el-date-picker class="picker_date2" v-model="rewards_date" value-format="yyyy-MM-dd" type="daterange"
+              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
             </el-date-picker>
           </div>
           <div id="category"></div>
           <div id="grade"></div>
         </div>
         <!-- 招聘看板 -->
-        <div v-if="true" class="training">
+        <div v-if="false" class="training">
           <div class="gradient">招聘看板</div>
           <div id="recruitment1"></div>
           <div class="line"></div>
@@ -248,15 +206,8 @@
     <div class="resign_header">
       <div class="title">离职看板</div>
       <div class="date">
-        <el-date-picker
-          class="picker_date2"
-          v-model="quit_date"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        >
+        <el-date-picker class="picker_date2" v-model="quit_date" value-format="yyyy-MM-dd" type="daterange"
+          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
         </el-date-picker>
       </div>
     </div>
@@ -377,17 +328,6 @@ export default {
           }
         }
       },
-
-      role: [
-        {
-          value: "部门主管",
-          label: "部门主管",
-        },
-        {
-          value: "HR主管",
-          label: "HR主管",
-        },
-      ],
       op_size: [
         {
           value: "龙华",
@@ -433,12 +373,35 @@ export default {
       size_value: "", // 厂区选择
       rest_date: "", // 风险预警日历数据
       week_date: "", // 出勤率日历数据
-      // 学历分布日历数据
-      // education_date: "",
       employeEvoice_date: "", // 员工之声日历数据
       rewards_date: "", // 奖惩看板日历数据
       quit_date: "", // 离职看板日历数据
 
+      box1: [{
+        name: '在职人数',
+        value: '7000'
+      },
+      {
+        name: '平均年龄',
+        value: '30'
+      },
+      {
+        name: 'IDL',
+        value: '3000'
+      },
+      {
+        name: 'DL',
+        value: '4000'
+      },
+      {
+        name: '男',
+        value: '500'
+      },
+      {
+        name: '女',
+        value: '600f'
+      }
+      ],
       risk_data: [ // 风险预警数据
         { value: 49, name: "派遣工" },
         { value: 90, name: "总员工" },
@@ -449,8 +412,10 @@ export default {
         },
       ],
       // 近一月出勤率
-      attendance_data_x: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-      attendance_data_y: [94, 98, 97, 96, 88, 100, 99],
+      attendance_data: {
+        x: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+        y: [94, 98, 97, 96, 88, 100, 99],
+      },
       qualification_data: [ // 年资分布
         { value: 1048, name: "试用期以内" },
         { value: 735, name: "试用期满1年" },
@@ -464,9 +429,10 @@ export default {
         { value: 1080, name: "员级(派遣工~员三)" },
         { value: 4840, name: "师8以上" },
       ],
-      // 学历分布
-      education_data_y: ["初中以下", "高中中技中专", "大专", "本科", "硕士", "博士"],
-      education_data: [1200, 2000, 1500, 800, 700, 110],
+      education_data: { // 学历分布
+        y: ["初中以下", "高中中技中专", "大专", "本科", "硕士", "博士"],
+        x: [1200, 2000, 1500, 800, 700, 110]
+      },
       employeevoice_date: [ // 员工之声
         { value: 1048, name: "管理问题" },
         { value: 735, name: "薪酬管理" },
@@ -499,12 +465,11 @@ export default {
         { value: 4840, name: "旷工除名" },
       ],
       recruitment1_total_data: [ // 招聘看_总需求
-        ["product", "总需求", "報到人數"],
+        // ["product", "总需求", "報到人數"],
         ["基础人力", 560, 400],
         ["社招", 550, 410],
         ["校招", 400, 333],
       ],
-
       recruitment_reach_data: { // 招聘看板_总达成
         y: [90, 70, 40],
         x: ["基础人力", "社招", "校招"],
@@ -517,12 +482,12 @@ export default {
       ],
       level_sum_data: [90], // 培训看板（总达成率
       Level_dc_data: { // 培训看板（各事业群达成率）
-        Level_dc_data_y: [80, 79, 88, 95, 46, 76],
-        Level_dc_data_x: ["CNEG", "Org.C", "G中央周邊", "IPBG", "CPEG", "NPEG"]
+        y: [80, 79, 88, 95, 46, 76],
+        x: ["CNEG", "Org.C", "G中央周邊", "IPBG", "CPEG", "NPEG"]
       },
       resignWhy_data: { // 离职原因
-        resignWhy_data_y: [120, 190, 150, 80, 70, 110, 130, 45, 89, 62, 78, 14, 56, 91, 11, 2, 54],
-        resignWhy_data_x: [
+        y: [120, 190, 150, 80, 70, 110, 130, 45, 89, 62, 78, 14, 56, 91, 11, 2, 54],
+        x: [
           "工作地点更换",
           "工作志趣差异",
           "不愿意上夜班",
@@ -542,7 +507,7 @@ export default {
           "继续深造",
         ]
       },
-      resign_Age: [ // 离职_年龄分布
+      resign_Age_data: [ // 离职_年龄分布
         { value: 656, name: "18-25岁" },
         { value: 1000, name: "26-30岁" },
         { value: 580, name: "31-35岁" },
@@ -615,7 +580,7 @@ export default {
     this.Rest();
     this.Attendance();
     this.Qualification();
-    this.Maps();
+    // this.Maps();
     this.Education();
     this.Seniority();
     this.EmployeeVoice();
@@ -652,101 +617,8 @@ export default {
         return "warning-row";
       }
     },
-    // 风险预警 (複雜數組對象)
-    // Risk2 () {
-    //     let myChart = this.$echarts.init(document.querySelector(".staff_c"));
-    //     myChart.setOption({
-    //         color: ["#83e5e4", "#8b9efd"], // 环的颜色
-    //         series: [
-    //             {
-    //                 type: "gauge", // 仪表盘模式
-    //                 center: ["50%", "50%"], // 中心（圆心坐标），【横坐标，纵坐标】
-    //                 radius: "60%", // 控制图饼的大小
-    //                 startAngle: 90, // 开始位置
-    //                 endAngle: -270, // 结束位置
-    //                 pointer: {
-    //                     // 仪表盘指针
-    //                     show: false, // 是否显示仪表盘指针
-    //                 },
-    //                 progress: {
-    //                     // 展示当前进度
-    //                     show: true, // 是否展示进度条
-    //                     overlap: false, // 多组数据是进度条是否重叠
-    //                     roundCap: false, // 是否圆顶
-    //                     clip: false, // 是否裁掉多出部分
-    //                     itemStyle: {
-    //                         // 数据的边框
-    //                         borderWidth: 10,
-    //                         borderColor: "#83e5e4",
-    //                     },
-    //                 },
-    //                 axisLine: {
-    //                     // 仪表盘轴线相关配置
-    //                     lineStyle: {
-    //                         // 仪表盘轴线样式
-    //                         width: 15,
-    //                         color: [[1, "#8b9efd"]], // 【不透明度，线条背景色】
-    //                     },
-    //                 },
-    //                 splitLine: {
-    //                     // 分隔线样式
-    //                     show: false,
-    //                     distance: 0, // 分隔线与轴线的距离
-    //                     length: 10, // 分隔线的线长
-    //                 },
-    //                 axisTick: {
-    //                     // 刻度样式
-    //                     show: false,
-    //                 },
-    //                 axisLabel: {
-    //                     // 刻度标签
-    //                     show: false,
-    //                     distance: 50, // 标签与刻度线的距离
-    //                 },
-    //                 data: [
-    //                     // 数据内容
-    //                     {
-    //                         value: 20,
-    //                         name: "",
-    //                         title: {
-    //                             // 仪表盘标题
-    //                             offsetCenter: ["0%", "0%"],
-    //                         },
-    //                         detail: {
-    //                             // 仪表盘数据
-    //                             valueAnimation: true, // 是否开启标签的数字动画
-    //                             offsetCenter: ["0%", "0%"], // 相对于中心的偏移位置，【水平方向，垂直方向】
-    //                             fontSize: 28, // 文字大小
-    //                         },
-    //                     },
-    //                 ],
-    //                 title: {
-    //                     fontSize: 14,
-    //                 },
-    //                 detail: {
-    //                     // 仪表盘详情，用于显示数据
-    //                     // width: 50,
-    //                     // height: 14,
-    //                     // fontSize: 14,
-    //                     color: "inherit", // 文本颜色，默认为仪表盘之间数字数据
-    //                     // borderColor: 'auto',
-    //                     // borderRadius: 20,
-    //                     // borderWidth: 1,
-    //                     formatter: "{value}%",
-    //                 },
-    //             },
-    //         ],
-    //     });
-    //     window.addEventListener("resize", function () {
-    //         myChart.resize();
-    //     });
-    // },
     // 风险预警(数组对象类型)
     Risk () {
-      // let risk_data = [
-      //     { value: 49, name: "派遣工" },
-      //     { value: 90, name: "总员工" },
-      // ]
       this.risk_data[1].itemStyle = {
         borderColor: "#83e5e4",
         borderWidth: 20,
@@ -879,10 +751,8 @@ export default {
         myChart.resize();
       });
     },
-    //近一周出勤率 (數組)
+    //近一月出勤率 (數組)
     Attendance () {
-      let attendance_data_x = ["10/01", "10/02", "10/03", "10/04", "10/05", "10/06", "10/07", "10/08", "10/09", "10/10", "10/11", "10/12", "10/13", "10/14", "10/15", "10/16", "10/17", "10/18", "10/19", "10/20", "10/21", "10/22", "10/23", "10/24", "10/25", "10/26", "10/27", "10/28", "10/29", "10/30", "10/31"];
-      let attendance_data_y = [94, 98, 97, 96, 88, 100, 100, 99, 97, 96, 94, 98, 97, 96, 88, 100, 100, 99, 97, 96, 94, 98, 97, 96, 88, 100, 100, 99, 97, 96, 100];
       let myChart = this.$echarts.init(document.querySelector("#attendance_c"));
       myChart.setOption({
         title: {
@@ -920,7 +790,7 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: this.attendance_data_x,
+          data: this.attendance_data.x,
           axisLine: {
             show: true,
             lineStyle: {
@@ -966,7 +836,7 @@ export default {
         series: [
           {
             name: "出勤率(%)",
-            data: this.attendance_data_y,
+            data: this.attendance_data.y,
             type: "line",
             symbol: "none",
             lineStyle: {
@@ -1003,70 +873,6 @@ export default {
       });
     },
     //年资分布 (數組對象)
-    // Qualification2 () {
-    //     let qualification_data = [
-    //         { value: 1048, name: "试用期以内" },
-    //         { value: 735, name: "试用期满1年" },
-    //         { value: 580, name: "1-3年" },
-    //         { value: 484, name: "3-6年" },
-    //         { value: 300, name: "6年以上" },
-    //     ];
-    //     let myChart = this.$echarts.init(
-    //         document.querySelector("#qualification_c"),
-    //         null,
-    //         { renderer: "svg" }
-    //     );
-    //     myChart.setOption({
-    //         tooltip: {
-    //             trigger: "item",
-    //         },
-    //         legend: {
-    //             top: "5%",
-    //             orient: "horizontal",
-    //             top: "bottom",
-    //             padding: [0, 0, 30, 0],
-    //         },
-    //         series: [
-    //             {
-    //                 name: "年资：人数",
-    //                 type: "pie",
-    //                 radius: ["35%", "70%"],
-    //                 // center: ["50%", "40%"],
-    //                 avoidLabelOverlap: false,
-    //                 label: {
-    //                     show: false,
-    //                     position: "center",
-    //                 },
-    //                 emphasis: {
-    //                     label: {
-    //                         show: true,
-    //                         fontSize: "40",
-    //                         fontWeight: "bold",
-    //                     },
-    //                 },
-    //                 label: {
-    //                     normal: {
-    //                         show: true,
-    //                         position: "inner",
-    //                         textStyle: {
-    //                             fontWeight: 400,
-    //                             fontSize: 12,
-    //                             color: "black",
-    //                         },
-    //                         formatter: "{c}人\n({d}%)",
-    //                     },
-    //                 },
-    //                 labelLine: {
-    //                     show: false,
-    //                 },
-    //                 data: qualification_data,
-    //             },
-    //         ],
-    //     });
-    //     window.addEventListener("resize", function () {
-    //         myChart.resize();
-    //     });
-    // },
     Qualification () {
       let qualification_data = [
         { value: 1048, name: "试用期以内" },
@@ -1586,74 +1392,8 @@ export default {
         myChart.resize();
       });
     },
-    //资位分布
-    // Seniority2() {
-    //   let myChart = this.$echarts.init(document.querySelector("#gradient_c"));
-    //   axios({
-    //     url: "http://localhost:8088/echarts2",
-    //     method: 'get'
-    //   })
-    //     .then((res) => {
-    //       myChart.setOption({
-    //         color: ["#70d3d0", "#17a9a8", "#ffda65", "#eb547d"],
-    //         tooltip: {
-    //           trigger: "item",
-    //         },
-    //         legend: {
-    //           show: true,
-    //           orient: "horizontal",
-    //           padding: [0, 10, 30, 10],
-    //           top: "bottom",
-    //         },
-    //         series: [
-    //           {
-    //             name: "年资：人数",
-    //             type: "pie",
-    //             radius: "65%",
-    //             data: res.data.data ? res.data.data : [440,250,360,120],
-    //             label: {
-    //               textStyle: {
-    //                 fontSize: 14,
-    //                 color: "#000000",
-    //               },
-    //               normal: {
-    //                 show: true,
-    //                 position: "inner",
-    //                 textStyle: {
-    //                   fontWeight: 400,
-    //                   fontSize: 12,
-    //                   color: "black",
-    //                 },
-    //                 formatter: "{c}人\n({d}%)",
-    //               },
-    //             },
-    //             emphasis: {
-    //               itemStyle: {
-    //                 shadowBlur: 10,
-    //                 shadowOffsetX: 0,
-    //                 shadowColor: "rgba(0, 0, 0, 0.5)",
-    //               },
-    //             },
-    //           },
-    //         ],
-    //       });
-    //     })
-    //     .catch((res) => {
-    //       // document.querySelector("#gradient_c").innerHTML = '<div style="position: relative; width: 395px; height: 480px; padding: 0px; margin: 0px; border-width: 0px;">失败</div>'
-    //       console.log(document.querySelector("#gradient_c").innerHTML);
-    //     });
-    //   window.addEventListener("resize", function () {
-    //     myChart.resize();
-    //   });
-    // },
     //资位分布 (數組對象)
     Seniority () {
-      // let seniority_data = [
-      //     { value: 7350, name: "师1~师3" },
-      //     { value: 5800, name: "师4~师7" },
-      //     { value: 1080, name: "员级(派遣工~员三)" },
-      //     { value: 4840, name: "师8以上" },
-      // ];
       let myChart = this.$echarts.init(document.querySelector("#gradient_c"));
       myChart.setOption({
         color: ["#70d3d0", "#17a9a8", "#ffda65", "#eb547d"],
@@ -1737,7 +1477,7 @@ export default {
         },
         yAxis: {
           type: "category",
-          data: this.education_data_y,
+          data: this.education_data.y,
           axisTick: {
             show: false,
           },
@@ -1763,7 +1503,7 @@ export default {
         },
         series: [
           {
-            data: this.education_data,
+            data: this.education_data.x,
             type: "bar",
             itemStyle: {
               normal: {
@@ -1787,15 +1527,6 @@ export default {
     },
     //员工之声 (數組對象)
     EmployeeVoice () {
-      let employeevoice_date = [
-        { value: 1048, name: "管理问题" },
-        { value: 735, name: "薪酬管理" },
-        { value: 580, name: "休息休假" },
-        { value: 484, name: "衣食住行" },
-        { value: 300, name: "信息咨询" },
-        { value: 300, name: "新冠疫情" },
-        { value: 300, name: "其他事件" },
-      ];
       let myChart = this.$echarts.init(
         document.querySelector("#employeEvoice_c")
       );
@@ -2354,7 +2085,7 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: this.Level_dc_data.Level_dc_data_x,
+          data: this.Level_dc_data.x,
           axisLabel: {
             show: true,
             interval: 0,
@@ -2404,7 +2135,7 @@ export default {
         },
         series: [
           {
-            data: this.Level_dc_data.Level_dc_data_y,
+            data: this.Level_dc_data.y,
             type: "bar",
             backgroundStyle: {
               color: "rgba(180, 180, 180, 0.2)",
@@ -2436,7 +2167,7 @@ export default {
         color: ["#7ddfde"],
         xAxis: {
           type: "category",
-          data: this.resignWhy_data.resignWhy_data_x,
+          data: this.resignWhy_data._x,
           axisLabel: {
             show: true,
             interval: 0,
@@ -2489,7 +2220,7 @@ export default {
         },
         series: [
           {
-            data: this.resignWhy_data.resignWhy_data_y,
+            data: this.resignWhy_data.y,
             type: "bar",
             // showBackground: true,
             backgroundStyle: {
@@ -2529,7 +2260,7 @@ export default {
             type: "pie",
             radius: "50%",
             center: ["42%", "60%"],
-            data: this.resign_Age,
+            data: this.resign_Age_data,
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -3265,36 +2996,36 @@ export default {
     .box1 {
       font-size: 36px;
       margin-bottom: 22px;
-      background: url("../assets/images/right_bg2.jpg") no-repeat;
+      // background: url("../assets/images/right_bg2.jpg") no-repeat;
       background-size: 100% 100%;
     }
 
     .box2 {
       margin-bottom: 22px;
       font-size: 36px;
-      background: url("../assets/images/right_bg1.jpg") no-repeat;
+      // background: url("../assets/images/right_bg1.jpg") no-repeat;
       background-size: 100% 100%;
     }
 
     .box3 {
-      background: url("../assets/images/right_bg3.jpg") no-repeat;
+      // background: url("../assets/images/right_bg3.jpg") no-repeat;
       background-size: 100% 100%;
       margin-bottom: 22px;
       font-size: 22px;
     }
 
-    .box3 > div {
+    .box3>div {
       padding: 0 20px;
       text-align: center;
     }
 
     .box4 {
-      background: url("../assets/images/right_bg4.jpg") no-repeat;
+      // background: url("../assets/images/right_bg4.jpg") no-repeat;
       background-size: 100% 100%;
       font-size: 22px;
     }
 
-    .box4 > div {
+    .box4>div {
       padding: 0 20px;
       text-align: center;
     }
@@ -3424,13 +3155,13 @@ export default {
     width: 69%;
     height: 100%;
 
-    .rewards {
+    #rewards {
       display: flex;
       position: relative;
       overflow: hidden;
       border-radius: 10px;
       width: 100%;
-      height: 360px;
+      height: 340px;
       background-color: #fff;
 
       .date {
@@ -3459,6 +3190,46 @@ export default {
         box-sizing: border-box;
         padding: 0 20px;
       }
+
+      .cg_h {}
+    }
+
+    .rewards {
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      width: 100%;
+      height: 760px;
+      background-color: #fff;
+
+      .date {
+        position: absolute;
+        right: 50%;
+        transform: translateX(50%);
+        top: 20px;
+        width: 260px;
+      }
+
+      #category {
+        width: 50%;
+        height: 600px;
+        margin-top: 70px;
+        margin-bottom: 20px;
+        border-right: solid 1px #83e5e4;
+        box-sizing: border-box;
+        padding: 0 20px;
+      }
+
+      #grade {
+        width: 50%;
+        height: 600px;
+        margin-top: 70px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        padding: 0 20px;
+      }
+
     }
 
     .training {
