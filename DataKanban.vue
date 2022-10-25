@@ -23,21 +23,6 @@
               >
               </el-option>
             </el-select>
-            <span>职位：</span>
-            <el-select
-              v-model="role_value"
-              placeholder="请选择"
-              class="upposition"
-            >
-              <el-option
-                v-for="item in role"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-                style="boder: none"
-              >
-              </el-option>
-            </el-select>
           </div>
         </div>
         <div class="risk">
@@ -119,15 +104,16 @@
           <div class="week">
             <div class="date">
               <el-date-picker
-                class="picker_date"
-                v-model="month_date"
-                value-format="yyyy-MM-dd"
+                v-model="week_date"
+                style="width: 220px"
                 type="daterange"
-                range-separator="至"
+                size="small"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-              >
-              </el-date-picker>
+                value-format="yyyy-MM-dd"
+                :picker-options="pickerOptions"
+                class="picker_date"
+              />
             </div>
             <div id="attendance_c"></div>
           </div>
@@ -223,6 +209,7 @@
     <!-- 奖惩、招聘、培训start -->
     <div class="aggregate_four">
       <div class="left">
+        <!-- 奖惩看板 -->
         <div class="rewards">
           <div class="gradient">奖惩看板</div>
           <div class="date">
@@ -240,7 +227,8 @@
           <div id="category"></div>
           <div id="grade"></div>
         </div>
-        <div class="training">
+        <!-- 招聘看板 -->
+        <div v-if="true" class="training">
           <div class="gradient">招聘看板</div>
           <div id="recruitment1"></div>
           <div class="line"></div>
@@ -359,6 +347,37 @@ export default {
   name: "DataKanban",
   data () {
     return {
+      // 限制选择一周的日期
+      choiceDate: null,
+      pickerOptions: {
+        onPick: ({ maxDate, minDate }) => {
+          // 把选择的第一个日期赋值给一个变量。
+          this.choiceDate = minDate.getTime()
+          // 如何你选择了两个日期了，就把那个变量置空
+          if (maxDate) this.choiceDate = ''
+        },
+        disabledDate: time => {
+          // 如何选择了一个日期
+          if (this.choiceDate) {
+            // 7天的时间戳
+            const one = 7 * 24 * 3600 * 1000
+            // 当前日期 - one = 7天之前
+            const minTime = this.choiceDate - one
+            // 当前日期 + one = 7天之后
+            const maxTime = this.choiceDate + one
+            return (
+              time.getTime() < minTime ||
+              time.getTime() > maxTime ||
+              // 限制不能选择今天及以后
+              time.getTime() > Date.now()
+            )
+          } else {
+            // 如果没有选择日期，就要限制不能选择今天及以后
+            return time.getTime() > Date.now()
+          }
+        }
+      },
+
       role: [
         {
           value: "部门主管",
@@ -413,7 +432,7 @@ export default {
       role_value: "", // 角色选择
       size_value: "", // 厂区选择
       rest_date: "", // 风险预警日历数据
-      month_date: "", // 出勤率日历数据
+      week_date: "", // 出勤率日历数据
       // 学历分布日历数据
       // education_date: "",
       employeEvoice_date: "", // 员工之声日历数据
@@ -479,24 +498,24 @@ export default {
         { value: 4840, name: "违纪除名" },
         { value: 4840, name: "旷工除名" },
       ],
-      recruitment1_data: [ // 招聘看板1
+      recruitment1_total_data: [ // 招聘看_总需求
         ["product", "总需求", "報到人數"],
         ["基础人力", 560, 400],
         ["社招", 550, 410],
         ["校招", 400, 333],
       ],
-      // 招聘看板2
-      recruitment2_data_y: [90, 70, 40],
-      recruitment2_data_x: ["基础人力", "社招", "校招"],
+
+      recruitment_reach_data: { // 招聘看板_总达成
+        y: [90, 70, 40],
+        x: ["基础人力", "社招", "校招"],
+      },
       leve3_data: [ // 培训看板(三级安全达成率)
         {
           value: 88,
           name: "达成率",
         },
       ],
-      // 培训看板（总达成率
-      level_sum_data: [90],
-
+      level_sum_data: [90], // 培训看板（总达成率
       Level_dc_data: { // 培训看板（各事业群达成率）
         Level_dc_data_y: [80, 79, 88, 95, 46, 76],
         Level_dc_data_x: ["CNEG", "Org.C", "G中央周邊", "IPBG", "CPEG", "NPEG"]
@@ -602,8 +621,8 @@ export default {
     this.EmployeeVoice();
     this.Category();
     this.Grade();
-    this.Recruitment1();
-    this.Recruitment2();
+    // this.Recruitment1();
+    // this.Recruitment2();
     this.Level3();
     this.Level_sum();
     this.Level_dc();
@@ -1981,7 +2000,7 @@ export default {
         myChart.resize();
       });
     },
-    //招聘看板1 (二維數組)
+    //招聘看板_总需求 (二維數組)
     Recruitment1 () {
       let myChart = this.$echarts.init(document.querySelector("#recruitment1"));
       myChart.setOption({
@@ -1989,7 +2008,7 @@ export default {
         legend: {},
         tooltip: {},
         dataset: {
-          source: this.recruitment1_data,
+          source: this.recruitment1_total_data,
         },
         xAxis: { type: "category" },
         yAxis: {
@@ -2038,7 +2057,7 @@ export default {
         myChart.resize();
       });
     },
-    //招聘看板2 (數組)
+    //招聘看板_达成率 (數組)
     Recruitment2 () {
       let myChart = this.$echarts.init(document.querySelector("#recruitment2"));
       myChart.setOption({
@@ -2064,7 +2083,7 @@ export default {
         yAxis: [
           {
             type: "category",
-            data: this.recruitment2_data_x,
+            data: this.recruitment_reach_data.x,
             inverse: true,
             //不显示相关的线
             axisLine: {
@@ -2093,7 +2112,7 @@ export default {
           {
             name: "达成率",
             type: "bar",
-            data: this.recruitment2_data_y,
+            data: this.recruitment_reach_data.y,
             yAxisIndex: 0,
             zlevel: 1,
             //修改第一组柱子的圆角
@@ -2329,7 +2348,6 @@ export default {
         color: ["#73d5d4"],
         title: {
           text: "培訓計劃達成率",
-          // padding: [10, 0, 0, 20],
           textStyle: {
             fontSize: 13,
           },
@@ -2971,11 +2989,15 @@ export default {
 .el-table .success-row {
   background: #95d9ce;
 }
+
+.aggregate_one .date[data-v-11fa6cbb] .el-date-editor .el-range-input {
+  background-color: #f3f6fd;
+}
 </style>
 
 <style lang="scss" scoped>
 .report {
-  min-width: 1200px;
+  min-width: 1280px;
   max-width: 2000px;
   width: 100%;
 }
@@ -3409,7 +3431,6 @@ export default {
       border-radius: 10px;
       width: 100%;
       height: 360px;
-      margin-bottom: 20px;
       background-color: #fff;
 
       .date {
@@ -3448,6 +3469,7 @@ export default {
       width: 100%;
       height: 380px;
       overflow: hidden;
+      margin-top: 20px;
       background-color: #fff;
 
       #recruitment1 {
