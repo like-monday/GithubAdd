@@ -14,8 +14,13 @@
           <div class="size">
             <span>厂区：</span>
             <el-select v-model="size_value" placeholder="请选择" class="upsize">
-              <el-option v-for="item in op_size" :key="item.value" :label="item.label" :value="item.value"
-                style="boder: none">
+              <el-option
+                v-for="item in op_size"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                style="boder: none"
+              >
               </el-option>
             </el-select>
           </div>
@@ -23,14 +28,25 @@
         <div class="risk">
           <!-- 彩色标题 -->
           <div class="gradient">风险预警</div>
-          <div class="staff" v-loading="true" element-loading-text="拼命加载中">
+          <div
+            class="staff"
+            v-loading="false"
+            element-loading-text="拼命加载中"
+          >
             <div class="staff_c"></div>
           </div>
           <div class="line"></div>
           <div class="rest">
             <div class="date">
-              <el-date-picker class="picker_date" v-model="rest_date" value-format="yyyy-MM-dd" type="daterange"
-                range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+              <el-date-picker
+                class="picker_date"
+                v-model="rest_date"
+                value-format="yyyy-MM-dd"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+              >
               </el-date-picker>
             </div>
             <div class="rest_c"></div>
@@ -60,11 +76,29 @@
             </div>
             <div class="qq">缺勤详情</div>
             <div class="queqing">
-              <el-table :data="tableData" height="220" size="mini" border :header-cell-style="{ background: '#17a9a8' }"
-                :row-class-name="tableRowClassName" id="success" style="width: 100%; color: #fff">
-                <el-table-column prop="date" label="工号" min-width="50" align="center">
+              <el-table
+                :data="absence_data"
+                height="220"
+                size="mini"
+                border
+                :header-cell-style="{ background: '#17a9a8' }"
+                :row-class-name="tableRowClassName"
+                id="success"
+                style="width: 100%; color: #fff"
+              >
+                <el-table-column
+                  prop="date"
+                  label="工号"
+                  min-width="50"
+                  align="center"
+                >
                 </el-table-column>
-                <el-table-column prop="name" label="姓名" align="center" min-width="50">
+                <el-table-column
+                  prop="name"
+                  label="姓名"
+                  align="center"
+                  min-width="50"
+                >
                 </el-table-column>
                 <el-table-column prop="address" label="缺勤類型" align="center">
                 </el-table-column>
@@ -73,9 +107,17 @@
           </div>
           <div class="week">
             <div class="date">
-              <el-date-picker v-model="week_date" style="width: 220px" type="daterange" size="small"
-                start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"
-                :picker-options="pickerOptions" class="picker_date" />
+              <el-date-picker
+                v-model="week_date"
+                style="width: 220px"
+                type="daterange"
+                size="small"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd"
+                :picker-options="pickerOptions"
+                class="picker_date"
+              />
             </div>
             <div id="attendance_c"></div>
           </div>
@@ -152,8 +194,15 @@
         <!-- 彩色标题 -->
         <div class="gradient">员工之声</div>
         <div class="date">
-          <el-date-picker class="picker_date2" v-model="employeEvoice_date" value-format="yyyy-MM-dd" type="daterange"
-            range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+          <el-date-picker
+            class="picker_date2"
+            v-model="employeEvoice_date"
+            value-format="yyyy-MM-dd"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          >
           </el-date-picker>
         </div>
         <div id="employeEvoice_c"></div>
@@ -165,11 +214,18 @@
     <div class="aggregate_four">
       <div class="left">
         <!-- 奖惩看板 -->
-        <div v-if="false" id="rewards">
+        <div v-if="true" id="rewards">
           <div class="gradient">奖惩看板</div>
           <div class="date">
-            <el-date-picker class="picker_date2" v-model="rewards_date" value-format="yyyy-MM-dd" type="daterange"
-              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+            <el-date-picker
+              class="picker_date2"
+              v-model="rewards_date"
+              value-format="yyyy-MM-dd"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            >
             </el-date-picker>
           </div>
           <div id="category"></div>
@@ -178,15 +234,22 @@
         <div v-else class="rewards">
           <div class="gradient">奖惩看板</div>
           <div class="date">
-            <el-date-picker class="picker_date2" v-model="rewards_date" value-format="yyyy-MM-dd" type="daterange"
-              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+            <el-date-picker
+              class="picker_date2"
+              v-model="rewards_date"
+              value-format="yyyy-MM-dd"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            >
             </el-date-picker>
           </div>
           <div id="category"></div>
           <div id="grade"></div>
         </div>
         <!-- 招聘看板 -->
-        <div v-show="false" class="training">
+        <div v-show="true" class="training">
           <div class="gradient">招聘看板</div>
           <div id="recruitment1"></div>
           <div class="line"></div>
@@ -206,8 +269,15 @@
     <div class="resign_header">
       <div class="title">离职看板</div>
       <div class="date">
-        <el-date-picker class="picker_date2" v-model="quit_date" value-format="yyyy-MM-dd" type="daterange"
-          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+        <el-date-picker
+          class="picker_date2"
+          v-model="quit_date"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        >
         </el-date-picker>
       </div>
     </div>
@@ -292,8 +362,10 @@
 </template>
 
 <script>
+import { Attendance } from './DataKanbans'
 import "echarts/map/js/china.js";
 import axios from "axios";
+import { getEcharts, getSites, getEmpno } from "../api/DataKanban"
 export default {
   name: "DataKanban",
   data () {
@@ -330,54 +402,35 @@ export default {
       },
       op_size: [
         {
-          value: "龙华",
+          value: "LH",
           label: "龙华",
         },
         {
-          value: "观澜",
+          value: "GL",
           label: "观澜",
         },
         {
-          value: "杭州",
+          value: "HZ",
           label: "杭州",
         },
       ],
-      tableData: [
-        {
-          date: "F1339411",
-          name: "欧阳子望",
-          address: "出差",
-        },
-        {
-          date: "F1339411",
-          name: "王小虎",
-          address: "出差",
-        },
-        {
-          date: "F1339411",
-          name: "王小虎",
-          address: "出差",
-        },
-        {
-          date: "F1339411",
-          name: "塔克福~艾华非",
-          address: "出差",
-        },
-        {
-          date: "F1339411",
-          name: "王小虎",
-          address: "出差",
-        },
-      ],
-      role_value: "", // 角色选择
+      permissions: { // 权限管理
+        attendance_information: true, // 风险预警、出勤看板权限
+        information: true, // 在职人数、平均年龄、员工类别、性别比例权限
+        qualification_map: true, // 年资、资位、籍贯分布权限
+        education_employeevoice: true, // 学历分布、员工之声权限
+        category_train: true, // 奖惩看板、培训看板权限
+        recruitment: false, // 招聘看板权限
+        resign: true // 离职看板权限
+      },
+      //   role_value: "", // 角色选择
       size_value: "", // 厂区选择
       rest_date: "", // 风险预警日历数据
       week_date: "", // 出勤率日历数据
       employeEvoice_date: "", // 员工之声日历数据
       rewards_date: "", // 奖惩看板日历数据
       quit_date: "", // 离职看板日历数据
-
-      box1: [{
+      information: [{ // 在职、年龄、员工、性别
         name: '在职人数',
         value: '7000'
       },
@@ -411,9 +464,51 @@ export default {
           value: 88,
         },
       ],
-      // 近一月出勤率
-      attendance_data: {
-        x: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+      report_numbers: [{ // 应到、实到、请假、出勤
+        name: '应到人数',
+        value: 26541
+      },
+      {
+        name: '实到人数',
+        value: 26000
+      },
+      {
+        name: '请假人数',
+        value: 60
+      },
+      {
+        name: '出勤率',
+        value: '90%'
+      }],
+      absence_data: [ // 表格数据
+        {
+          date: "F1339411",
+          name: "欧阳子望",
+          address: "出差",
+        },
+        {
+          date: "F1339411",
+          name: "王小虎",
+          address: "出差",
+        },
+        {
+          date: "F1339411",
+          name: "王小虎",
+          address: "出差",
+        },
+        {
+          date: "F1339411",
+          name: "塔克福~艾华非",
+          address: "出差",
+        },
+        {
+          date: "F1339411",
+          name: "王小虎",
+          address: "出差",
+        },
+      ],
+      attendance_data: { // 近一周出勤率
+        x: ["10/01", "10/02", "10/03", "10/04", "10/05", "10/06", "10/07"],
         y: [94, 98, 97, 96, 88, 100, 99],
       },
       qualification_data: [ // 年资分布
@@ -423,6 +518,26 @@ export default {
         { value: 484, name: "3-6年" },
         { value: 300, name: "6年以上" },
       ],
+      map_data: [{ // 籍贯分布
+        name: "北京",
+        value: "10000",
+      },
+      {
+        name: "天津",
+        value: 500,
+      },
+      {
+        name: "上海",
+        value: 1600,
+      },
+      {
+        name: "重庆",
+        value: 600,
+      },
+      {
+        name: "河北",
+        value: 100,
+      }],
       seniority_data: [ // 资位分布
         { value: 7350, name: "师1~师3" },
         { value: 5800, name: "师4~师7" },
@@ -464,7 +579,7 @@ export default {
         { value: 4840, name: "违纪除名" },
         { value: 4840, name: "旷工除名" },
       ],
-      recruitment1_total_data: [ // 招聘看_总需求
+      recruitment_total_data: [ // 招聘看_总需求
         // ["product", "总需求", "報到人數"],
         ["基础人力", 560, 400],
         ["社招", 550, 410],
@@ -580,14 +695,14 @@ export default {
     this.Rest();
     this.Attendance();
     this.Qualification();
-    // this.Maps();
+    this.Maps();
     this.Education();
     this.Seniority();
     this.EmployeeVoice();
     this.Category();
     this.Grade();
-    // this.Recruitment1();
-    // this.Recruitment2();
+    this.Recruitment1();
+    this.Recruitment2();
     this.Level3();
     this.Level_sum();
     this.Level_dc();
@@ -601,8 +716,9 @@ export default {
     this.Resign_school();
     this.Resign_IDL();
     this.Resign_nz();
-
     // 调用接口
+    // this.getno()
+    this.getSite()
     // this.getRest();
   },
   methods: {
@@ -641,7 +757,7 @@ export default {
             name: "人数",
             type: "pie",
             radius: [60, 70],
-            center: ["30%", "55%"],
+            center: ["50%", "55%"],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 1,
@@ -660,19 +776,42 @@ export default {
         myChart.resize();
       });
     },
-    //超六休一人数
+    getno () {
+      console.log(sessionStorage.getItem('empNo'));
+      getEmpno(sessionStorage.getItem('empNo')).then((res) => {
+        console.log('获取工号接口', res);
+      })
+    },
+    getSite () {
+      getSites().then((res) => {
+        // console.log('厂区', res.data.data);
+        this.$store.commit('SET_Sites', res.data.data)
+        this.getRest()
+      })
+    },
     getRest () {
-      axios({
-        url: "http://localhost:8088/echarts",
-        method: "get",
-      }).then((res) => {
-        console.log(res.data.data);
-        this.restdate = res.data.data;
+      //   let result = await getInfo();
+      //   console.log(result);
+      getEcharts().then((res) => {
+        console.log(res);
+        this.restdata = res.data.data;
         this.$nextTick(() => {
           this.Rest();
         });
-      });
+      })
+      //   axios({
+      //     url: "http://localhost:8088/echarts",
+      //     method: "get",
+      //   }).then((res) => {
+      //     console.log(res.data.data);
+      //     this.restdata = res.data.data;
+      //     this.$nextTick(() => {
+      //       this.Rest();
+      //     });
+      //   });
     },
+
+    //超六休一人数
     Rest () {
       let myChart = this.$echarts.init(document.querySelector(".rest_c"));
       myChart.setOption({
@@ -867,7 +1006,6 @@ export default {
           },
         ],
       });
-
       window.addEventListener("resize", function () {
         myChart.resize();
       });
@@ -921,7 +1059,6 @@ export default {
                 formatter: "{c}人\n({d}%)",
               },
             },
-
             data: qualification_data.sort((a, b) => b.value - a.value), //数组从大到小排序
           },
           //colors[0]line
@@ -975,7 +1112,6 @@ export default {
             data: [0],
           },
           // 蓝色
-
           {
             name: "",
             type: "custom",
@@ -1025,7 +1161,6 @@ export default {
             },
             data: [0],
           },
-
           {
             name: "",
             type: "custom",
@@ -1130,7 +1265,6 @@ export default {
       window.addEventListener("resize", function () {
         myChart.resize();
       });
-
       //获取圆上面某点的坐标(x0,y0表示坐标，r半径，angle角度)
       function getCirlPoint (x0, y0, r, angle) {
         let x1 = x0 + r * Math.cos((angle * Math.PI) / 180);
@@ -1140,7 +1274,6 @@ export default {
           y: y1,
         };
       }
-
       function draw () {
         angle = angle + 3;
         myChart.setOption(option);
@@ -1313,28 +1446,28 @@ export default {
           left: "20",
           splitList: [
             {
-              start: 500,
-              end: 600,
+              start: 2501,
+              end: 100000,
             },
             {
-              start: 400,
-              end: 500,
+              start: 20001,
+              end: 2500,
             },
             {
-              start: 300,
-              end: 400,
+              start: 1501,
+              end: 2000,
             },
             {
-              start: 200,
-              end: 300,
+              start: 1001,
+              end: 1500,
             },
             {
-              start: 100,
-              end: 200,
+              start: 501,
+              end: 1000,
             },
             {
               start: 0,
-              end: 100,
+              end: 500,
             },
           ],
           color: [
@@ -1378,7 +1511,7 @@ export default {
               min: "0.7",
               max: "4",
             },
-            data: this.mydata, //数据
+            data: this.map_data, //数据
           },
         ],
       };
@@ -1739,7 +1872,7 @@ export default {
         legend: {},
         tooltip: {},
         dataset: {
-          source: this.recruitment1_total_data,
+          source: this.recruitment_total_data,
         },
         xAxis: { type: "category" },
         yAxis: {
@@ -2707,8 +2840,22 @@ export default {
       window.addEventListener("resize", function () {
         myChart.resize();
       });
-    },
+    }
   },
+  computed: {
+    Sites () {
+      return this.$store.state.user.sites
+    }
+  },
+  watch: {
+    size_value (newval, old) {
+      console.log('监听厂区变化', newval);
+      this.$store.state.user.sites = newval
+    },
+    Sites (newval, oldval) {
+      console.log('触发监听', this.$store.state.user.sites);
+    }
+  }
 };
 </script>
 
@@ -2716,11 +2863,9 @@ export default {
 .el-table .warning-row {
   background: #17a9a8;
 }
-
 .el-table .success-row {
   background: #95d9ce;
 }
-
 .aggregate_one .date[data-v-11fa6cbb] .el-date-editor .el-range-input {
   background-color: #f3f6fd;
 }
@@ -2732,17 +2877,14 @@ export default {
   max-width: 2000px;
   width: 100%;
 }
-
 .size_spacing {
   letter-spacing: 6px;
 }
-
 // 页头
 .header {
   width: 100%;
   height: 60px;
   background-color: #17a9a8;
-
   span {
     display: inline-block;
     color: #fff;
@@ -2754,7 +2896,6 @@ export default {
     background-color: #22b7b5;
   }
 }
-
 // 第一板块（风险、出勤、年龄）
 .aggregate_one {
   display: flex;
@@ -2762,51 +2903,40 @@ export default {
   padding: 20px 40px;
   width: 100%;
   height: 806px;
-
   .left {
     width: 70%;
-
     .top {
       display: flex;
       justify-content: space-between;
-
       .title {
         font-size: 25px;
         font-weight: 600;
       }
-
       .size {
         height: 28px;
-
         span {
           font-size: 18px;
           margin-left: 20px;
         }
-
         .upsize,
         .upposition {
           height: 28px;
           border: none;
         }
-
         .upsize {
           width: 90px;
         }
-
         .upposition {
           width: 110px;
         }
-
         ::v-deep .el-input__inner {
           border: none;
         }
-
         ::v-deep .el-icon-arrow-up:before {
           color: #17a9a8;
         }
       }
     }
-
     .risk {
       display: flex;
       position: relative;
@@ -2818,38 +2948,32 @@ export default {
       border: 2px solid #22b7b5;
       overflow: hidden;
       background-color: #fff;
-
       .staff {
         box-sizing: border-box;
-        padding: 0 0 0 100px;
+        padding: 0 0 0 10px;
         height: 100%;
         width: 49.9%;
-
         .staff_c {
           width: 100%;
           height: 100%;
         }
       }
-
       .line {
         margin-top: 25px;
         height: 80%;
         width: 0.1%;
         background-color: #83e5e4;
       }
-
       .rest {
         box-sizing: border-box;
         height: 100%;
         width: 49.9%;
-
         .rest_c {
           box-sizing: border-box;
           padding: 0 50px 0 50px;
           width: 100%;
           height: 215px;
         }
-
         .date {
           width: 100%;
           height: 45px;
@@ -2857,25 +2981,21 @@ export default {
         }
       }
     }
-
     .attendance {
       display: flex;
       margin-top: 20px;
-
       .left {
         position: relative;
         width: 50%;
         height: 436px;
         border-radius: 10px;
         background-color: #fff;
-
         .top {
           margin-top: 50px;
           box-sizing: border-box;
           padding: 0 20px 0 0;
           width: 100%;
           height: 90px;
-
           .box1,
           .box2,
           .box3,
@@ -2888,7 +3008,6 @@ export default {
             width: 25%;
             color: #fff;
           }
-
           span {
             display: inline-block;
             font-size: 13px;
@@ -2902,40 +3021,33 @@ export default {
             border-radius: 4px;
             background-color: rgba($color: #d3d3d3, $alpha: 0.4);
           }
-
           .box1 {
             margin-left: 20px;
             background-color: #d1d1d1;
             background: linear-gradient(45deg, #94a4fc, #becbff);
           }
-
           .box2 {
             margin-left: 20px;
             background: linear-gradient(45deg, #f8a0b6, #f4ccd7);
           }
-
           .box3 {
             margin-left: 20px;
             background: linear-gradient(45deg, #f5b472, #fbc89b);
           }
-
           .box4 {
             margin-left: 20px;
             background: linear-gradient(45deg, #9a88f8, #c9c2f5);
           }
         }
-
         .qq {
           margin: 20px 0 20px 20px;
           font-weight: 600;
           font-size: 14px;
         }
-
         .queqing {
           padding: 0 20px 20px 20px;
         }
       }
-
       .week {
         margin-left: 20px;
         width: 50%;
@@ -2945,13 +3057,11 @@ export default {
         background: #fff;
         border-radius: 10px;
         overflow: hidden;
-
         .date {
           width: 100%;
           height: 45px;
           padding: 0 0 20px 0;
         }
-
         #attendance_c {
           height: 346px;
           width: 100%;
@@ -2959,7 +3069,6 @@ export default {
       }
     }
   }
-
   .right {
     width: 30%;
     height: 100%;
@@ -2968,7 +3077,6 @@ export default {
     background-color: #fff;
     border-radius: 10px;
     padding: 30px 50px;
-
     .box1,
     .box2,
     .box3,
@@ -2983,7 +3091,6 @@ export default {
       letter-spacing: 5px;
       color: #fff;
       font-weight: 600;
-
       span {
         font-size: 16px;
         position: absolute;
@@ -2992,46 +3099,39 @@ export default {
         font-weight: 200;
       }
     }
-
     .box1 {
       font-size: 36px;
       margin-bottom: 22px;
-      // background: url("../assets/images/right_bg2.jpg") no-repeat;
+      background: url("../assets/images/right_bg2.jpg") no-repeat;
       background-size: 100% 100%;
     }
-
     .box2 {
       margin-bottom: 22px;
       font-size: 36px;
-      // background: url("../assets/images/right_bg1.jpg") no-repeat;
+      background: url("../assets/images/right_bg1.jpg") no-repeat;
       background-size: 100% 100%;
     }
-
     .box3 {
-      // background: url("../assets/images/right_bg3.jpg") no-repeat;
+      background: url("../assets/images/right_bg3.jpg") no-repeat;
       background-size: 100% 100%;
       margin-bottom: 22px;
       font-size: 22px;
     }
-
-    .box3>div {
+    .box3 > div {
       padding: 0 20px;
       text-align: center;
     }
-
     .box4 {
-      // background: url("../assets/images/right_bg4.jpg") no-repeat;
+      background: url("../assets/images/right_bg4.jpg") no-repeat;
       background-size: 100% 100%;
       font-size: 22px;
     }
-
-    .box4>div {
+    .box4 > div {
       padding: 0 20px;
       text-align: center;
     }
   }
 }
-
 // 第二板块（年资、籍贯、资位）
 .aggregate_two {
   display: flex;
@@ -3041,7 +3141,6 @@ export default {
   width: 100%;
   height: 500px;
   // background-color: #22b7b5;
-
   .qualification {
     position: relative;
     width: 29.4%;
@@ -3049,25 +3148,21 @@ export default {
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
-
     #qualification_c {
       width: 100%;
       height: 100%;
     }
   }
-
   .map {
     position: relative;
     margin: 0 20px;
     height: 480px;
     width: 38.2%;
-
     #map_c {
       width: 100%;
       height: 100%;
     }
   }
-
   .seniority {
     position: relative;
     background-color: #fff;
@@ -3075,14 +3170,12 @@ export default {
     width: 29.4%;
     overflow: hidden;
     border-radius: 10px;
-
     #gradient_c {
       width: 100%;
       height: 100%;
     }
   }
 }
-
 // 第三板块（学历、员工之声）
 .aggregate_three {
   display: flex;
@@ -3091,7 +3184,6 @@ export default {
   padding: 0 40px 20px 40px;
   width: 100%;
   height: 460px;
-
   .education {
     position: relative;
     margin-right: 20px;
@@ -3100,7 +3192,6 @@ export default {
     width: 50%;
     height: 100%;
     background-color: #fff;
-
     .date {
       position: absolute;
       right: 50%;
@@ -3108,7 +3199,6 @@ export default {
       top: 20px;
       width: 260px;
     }
-
     #education_c {
       position: relative;
       margin-top: 40px;
@@ -3116,7 +3206,6 @@ export default {
       height: 400px;
     }
   }
-
   .employeEvoice {
     position: relative;
     border-radius: 10px;
@@ -3124,13 +3213,11 @@ export default {
     width: 50%;
     height: 100%;
     background-color: #fff;
-
     #employeEvoice_c {
       width: 90%;
       margin-top: 40px;
       height: 400px;
     }
-
     .date {
       position: absolute;
       right: 50%;
@@ -3140,7 +3227,6 @@ export default {
     }
   }
 }
-
 // 第四板块（奖惩、培训、招聘）
 .aggregate_four {
   display: flex;
@@ -3148,22 +3234,19 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 0 40px;
-
   .left {
     overflow: hidden;
     margin-right: 20px;
     width: 69%;
     height: 100%;
-
     #rewards {
       display: flex;
       position: relative;
       overflow: hidden;
       border-radius: 10px;
       width: 100%;
-      height: 340px;
+      height: 360px;
       background-color: #fff;
-
       .date {
         position: absolute;
         right: 50%;
@@ -3171,7 +3254,6 @@ export default {
         top: 20px;
         width: 260px;
       }
-
       #category {
         width: 50%;
         height: 270px;
@@ -3181,7 +3263,6 @@ export default {
         box-sizing: border-box;
         padding: 0 20px;
       }
-
       #grade {
         width: 50%;
         height: 270px;
@@ -3190,10 +3271,9 @@ export default {
         box-sizing: border-box;
         padding: 0 20px;
       }
-
-      .cg_h {}
+      .cg_h {
+      }
     }
-
     .rewards {
       display: flex;
       position: relative;
@@ -3202,7 +3282,6 @@ export default {
       width: 100%;
       height: 760px;
       background-color: #fff;
-
       .date {
         position: absolute;
         right: 50%;
@@ -3210,7 +3289,6 @@ export default {
         top: 20px;
         width: 260px;
       }
-
       #category {
         width: 50%;
         height: 600px;
@@ -3220,7 +3298,6 @@ export default {
         box-sizing: border-box;
         padding: 0 20px;
       }
-
       #grade {
         width: 50%;
         height: 600px;
@@ -3229,9 +3306,7 @@ export default {
         box-sizing: border-box;
         padding: 0 20px;
       }
-
     }
-
     .training {
       position: relative;
       display: flex;
@@ -3242,7 +3317,6 @@ export default {
       overflow: hidden;
       margin-top: 20px;
       background-color: #fff;
-
       #recruitment1 {
         margin-top: 50px;
         width: 50%;
@@ -3250,14 +3324,12 @@ export default {
         box-sizing: border-box;
         padding: 0 10px;
       }
-
       .line {
         margin-top: 70px;
         width: 1px;
         height: 70%;
         background-color: #83e5e4;
       }
-
       #recruitment2 {
         margin-top: 50px;
         width: 50%;
@@ -3267,7 +3339,6 @@ export default {
       }
     }
   }
-
   .right {
     position: relative;
     overflow: hidden;
@@ -3275,21 +3346,18 @@ export default {
     width: 31%;
     height: 100%;
     background-color: #fff;
-
     #level3 {
       margin-top: 50px;
       width: 100%;
       height: 300px;
       // background-color: #94a4fc;
     }
-
     #leve_sum {
       margin-top: 20px;
       width: 100%;
       height: 60px;
       // background-color: #2e9ece;
     }
-
     #leve_dc {
       margin-top: 20px;
       width: 100%;
@@ -3298,20 +3366,17 @@ export default {
     }
   }
 }
-
 // 第五板块（离职板块标题）
 .resign_header {
   display: flex;
   justify-content: space-between;
   margin: 20px 40px;
-
   .title {
     letter-spacing: 4px;
     font-size: 26px;
     font-weight: 600;
   }
 }
-
 // 第六板块（原因、年龄、占比）
 .aggregate_five {
   display: flex;
@@ -3320,12 +3385,10 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 0 40px;
-
   .left {
     width: 54.4%;
     height: 100%;
     margin-right: 20px;
-
     .resign_why {
       overflow: hidden;
       position: relative;
@@ -3333,7 +3396,6 @@ export default {
       border-radius: 10px;
       width: 100%;
       height: 360px;
-
       #resign_why {
         width: 100%;
         // height: 100%;
@@ -3341,7 +3403,6 @@ export default {
         height: calc(100% - 10px);
       }
     }
-
     .resign_two {
       display: flex;
       width: 100%;
@@ -3349,30 +3410,25 @@ export default {
       margin-top: 20px;
       background-color: #fff;
       border-radius: 10px;
-
       .resign_age {
         position: relative;
         width: 50%;
         height: 100%;
-
         #resign_age {
           width: 100%;
           height: 100%;
         }
       }
-
       .line {
         width: 1px;
         height: 240px;
         margin-top: 50px;
         background-color: #83e5e4;
       }
-
       .resign_position {
         position: relative;
         width: 50%;
         height: 100%;
-
         #resign_position {
           width: 100%;
           height: 100%;
@@ -3380,21 +3436,18 @@ export default {
       }
     }
   }
-
   .right {
     position: relative;
     width: 44.1%;
     height: 100%;
     border-radius: 10px;
     background-color: #fff;
-
     #resign_bfb {
       width: 100%;
       height: 100%;
     }
   }
 }
-
 // 第七板块（岗位、职位）
 .aggregate_six {
   display: flex;
@@ -3404,7 +3457,6 @@ export default {
   box-sizing: border-box;
   padding: 0 40px;
   margin-top: 20px;
-
   .left {
     display: flex;
     width: 54.4%;
@@ -3412,51 +3464,43 @@ export default {
     border-radius: 10px;
     margin-right: 20px;
     background-color: #fff;
-
     .resign_post {
       position: relative;
       width: 50%;
       height: 100%;
-
       #resign_post {
         width: 100%;
         height: 100%;
       }
     }
-
     .line {
       width: 1px;
       height: 240px;
       margin-top: 50px;
       background-color: #83e5e4;
     }
-
     .resign_kj {
       position: relative;
       width: 50%;
       height: 100%;
-
       #resign_kj {
         width: 100%;
         height: 100%;
       }
     }
   }
-
   .right {
     position: relative;
     width: 44.1%;
     height: 100%;
     border-radius: 10px;
     background-color: #fff;
-
     #resign_zw {
       width: 100%;
       height: 100%;
     }
   }
 }
-
 // 第八板块（校招、IDL、年资）
 .aggregate_seven {
   display: flex;
@@ -3466,7 +3510,6 @@ export default {
   margin-top: 20px;
   box-sizing: border-box;
   padding: 0 40px 20px 40px;
-
   .left {
     display: flex;
     width: 54.4%;
@@ -3474,44 +3517,37 @@ export default {
     border-radius: 10px;
     margin-right: 20px;
     background-color: #fff;
-
     .resign_school {
       position: relative;
       width: 50%;
       height: 100%;
-
       #resign_school {
         width: 100%;
         height: 100%;
       }
     }
-
     .line {
       width: 1px;
       height: 240px;
       margin-top: 50px;
       background-color: #83e5e4;
     }
-
     .resign_IDL {
       position: relative;
       width: 50%;
       height: 100%;
-
       #resign_IDL {
         width: 100%;
         height: 100%;
       }
     }
   }
-
   .right {
     position: relative;
     width: 44.1%;
     height: 100%;
     border-radius: 10px;
     background-color: #fff;
-
     #resign_nz {
       margin-top: 20px;
       width: 100%;
@@ -3519,7 +3555,6 @@ export default {
     }
   }
 }
-
 // 彩色标题
 .gradient {
   position: absolute;
@@ -3532,7 +3567,6 @@ export default {
   background-image: linear-gradient(to right, #8d9dfd, #91defa);
   line-height: 0px;
 }
-
 /* 190宽度日期组件的大小 */
 .picker_date {
   float: right;
@@ -3540,7 +3574,6 @@ export default {
   min-width: 130px;
   height: 30px;
 }
-
 // 修改日期组件的颜色
 .aggregate_one,
 .aggregate_three,
@@ -3549,47 +3582,38 @@ export default {
     background-color: #effaf8;
     border: none;
   }
-
   .date {
     ::v-deep .el-range-editor--mini .el-range-separator {
       color: #17a9a8;
     }
-
     ::v-deep .el-range-editor--mini .el-range-input {
       background-color: #f3f6fd;
     }
-
     ::v-deep .el-icon-date:before {
       color: #17a9a8;
     }
-
     ::v-deep .el-date-editor .el-range-input {
       color: #17a9a8;
     }
   }
 }
-
 // 修改离职看板日期组件颜色
 .resign_header {
   .el-input__inner {
     border: none;
   }
-
   .date {
     ::v-deep .el-range-editor--mini .el-range-separator {
       color: #17a9a8;
     }
-
     ::v-deep .el-icon-date:before {
       color: #17a9a8;
     }
-
     ::v-deep .el-date-editor .el-range-input {
       color: #17a9a8;
     }
   }
 }
-
 // 260宽度日期组件大小
 .picker_date2 {
   width: 260px;
@@ -3597,7 +3621,6 @@ export default {
   height: 30px;
   color: #17a9a8;
 }
-
 /* 青灰色大背景 */
 .shadow3 {
   background-color: #eeeeee;
