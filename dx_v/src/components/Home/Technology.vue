@@ -8,13 +8,16 @@
         <div class="content">
             <ul>
                 <li v-for="item in 18">
-                    <a href="javascript:;">
-                        <div class="img_title">
-                            <img src="../../assets/images/csdn.ico" alt="">
-                            <span>CSDN</span>
-                        </div>
-                        <div class="describe">专业开发者社区</div>
-                    </a>
+                    <div class="bg"></div>
+                    <div class="text">
+                        <a href="javascript:;">
+                            <div class="img_title">
+                                <img src="../../assets/images/cnsd.ico" alt="">
+                                <span>CSDN</span>
+                            </div>
+                            <div class="describe">专业开发者社区</div>
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -59,40 +62,58 @@ import { } from 'vue'
             overflow: hidden;
 
             li {
+                position: relative;
                 border-radius: 8px;
-                box-sizing: border-box;
-                padding: 10px;
                 margin-top: 10px;
                 width: 15.5%;
                 height: 90px;
                 margin-right: 10px;
                 align-items: center;
+                overflow: hidden;
 
-
-                .img_title {
-                    display: flex;
+                .text {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    box-sizing: border-box;
+                    padding: 10px;
                     align-items: center;
 
-                    img {
-                        width: 35px;
-                        height: 35px;
-                        margin-right: 5px;
+                    .img_title {
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 35px;
+                            height: 35px;
+                            margin-right: 5px;
+                        }
+
+                        span {
+                            font-size: 18px;
+                        }
                     }
 
-                    span {
-                        font-size: 18px;
+                    .describe {
+                        margin-top: 10px;
+                        font-size: 12px;
                     }
                 }
 
-                .describe {
-                    margin-top: 10px;
-                    font-size: 12px;
+                .bg {
+                    width: 0;
+                    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
                 }
 
             }
 
-            li:hover {
+            li:hover .bg {
+                width: 100%;
+                height: 100%;
                 background-color: rgba(99, 191, 239, 0.27);
+                // transition: all .2s ease-in-out;
             }
         }
     }
