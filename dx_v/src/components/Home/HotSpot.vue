@@ -5,44 +5,44 @@
         <div class="content_list">
             <div class="list_hot">
                 <div class="title_weibo">微博热搜</div>
-                <ul>
+                <ul v-loading="weibo_loading">
                     <li v-for="(item, index) in list_web">
                         <a :href="item.url" target="_blank">
-                            <span>{{index+1}}</span>
-                            <span>{{item.name}}</span>
+                            <span>{{ index + 1 }}</span>
+                            <span>{{ item.name }}</span>
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="list_hot">
                 <div class="title_dy">抖音热搜</div>
-                <ul>
+                <ul v-loading="dy_loading">
                     <li v-for="(item, index) in list_dy">
                         <a :href="item.url" target="_blank">
-                            <span>{{index+1}}</span>
-                            <span>{{item.name}}</span>
+                            <span>{{ index + 1 }}</span>
+                            <span>{{ item.name }}</span>
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="list_hot">
                 <div class="title_baidu">百度热搜</div>
-                <ul>
+                <ul v-loading="baidu_loading">
                     <li v-for="(item, index) in list_baidu">
                         <a :href="item.url" target="_blank">
-                            <span>{{index+1}}</span>
-                            <span>{{item.name}}</span>
+                            <span>{{ index + 1 }}</span>
+                            <span>{{ item.name }}</span>
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="list_hot">
                 <div class="title_b">bilibii热搜</div>
-                <ul>
+                <ul v-loading="B_loading">
                     <li v-for="(item, index) in list_B">
                         <a :href="item.url" target="_blank">
-                            <span>{{index+1}}</span>
-                            <span>{{item.name}}</span>
+                            <span>{{ index + 1 }}</span>
+                            <span>{{ item.name }}</span>
                         </a>
                     </li>
                 </ul>
@@ -60,6 +60,12 @@ let list_dy = reactive([])
 let list_baidu = reactive([])
 let list_B = reactive([])
 
+// 加载loading
+let weibo_loading = ref(true)
+let dy_loading = ref(true)
+let baidu_loading = ref(true)
+let B_loading = ref(true)
+
 onMounted(() => {
     axios({
         method: 'get',
@@ -69,6 +75,8 @@ onMounted(() => {
             for (let i = 0; i < 10; i++) {
                 list_web[i] = res.data.list[i]
             }
+            weibo_loading.value = false
+            // console.log(list_web);
         }
     })
     axios({
@@ -79,6 +87,8 @@ onMounted(() => {
             for (let i = 0; i < 10; i++) {
                 list_dy[i] = res.data.list[i]
             }
+            dy_loading.value = false
+            // console.log(list_web);
         }
     })
     axios({
@@ -89,6 +99,7 @@ onMounted(() => {
             for (let i = 0; i < 10; i++) {
                 list_baidu[i] = res.data.list[i]
             }
+            baidu_loading.value = false
         }
     })
     axios({
@@ -99,6 +110,7 @@ onMounted(() => {
             for (let i = 0; i < 10; i++) {
                 list_B[i] = res.data.list[i]
             }
+            B_loading.value = false
         }
     })
 })
@@ -212,6 +224,10 @@ onMounted(() => {
                         overflow: hidden;
                         /*超出部分隐藏*/
                     }
+                }
+
+                li:hover {
+                    background-color: #b1eaff55;
                 }
 
 
