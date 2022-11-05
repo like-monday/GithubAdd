@@ -1,15 +1,13 @@
 <template>
     <div class="navbar">
         <div class="w">
-            <div class="logo">
-                DX-CXY
-            </div>
+            <div class="logo">DX-CXY</div>
             <div>
                 <ul id="navbar" @click="toModular($event)">
-                    <li :class={li_active:arr[0].home}>首页</li>
-                    <li :class={li_active:arr[1].frontEnd}>前端</li>
-                    <li :class={li_active:arr[0].backEnd}>后端</li>
-                    <li :class={li_active:arr[0].journal}>迭代日志</li>
+                    <li :class="{ li_active: arr[0].value }">首页</li>
+                    <li :class="{ li_active: arr[1].value }">前端</li>
+                    <li :class="{ li_active: arr[2].value }">后端</li>
+                    <li :class="{ li_active: arr[3].value }">迭代日志</li>
                 </ul>
             </div>
             <ul class="date_weather">
@@ -25,51 +23,69 @@
 </template>
   
 <script setup>
-import { onMounted, ref, reactive } from 'vue'
+import { useRouter } from 'vue-router';   // 1. 引入路由
+import { onMounted, ref, reactive, watch } from 'vue'
 
+const $router = useRouter();   // 2. 定义路由
 let arr = reactive([
     {
         name: '首页',
-        home: true
+        value: false
     },
     {
         name: '前端',
-        frontEnd: false
+        value: false
     },
     {
         name: '后端',
-        backEnd: false
+        value: false
     },
     {
         name: '迭代日志',
-        journal: false
+        value: false
     }])
 
 let toModular = function (e) {
-    console.log(e.target.innerText);
     switch (e.target.innerText) {
         case '首页':
-            arr[0].home = true
             for (const key in arr) {
-                console.log(arr[key]);
+                arr[key].value = false
             }
+            arr[0].value = true
+            $router.replace('/home')
+            break;
+        case '前端':
+            for (const key in arr) {
+                arr[key].value = false
+            }
+            arr[1].value = true
+            $router.replace('/Web')   // 3.使用路由
             break;
     }
 }
+
+if ($router.currentRoute.value.path == '/Web') {
+    arr[1].value = true
+} else if ($router.currentRoute.value.path == '/home') {
+    arr[0].value = true
+}
+
+// watch()
 
 </script>
    
 <style lang = "less" scoped>
 .navbar {
     position: fixed;
+    z-index: 999;
     top: 0;
     left: 0;
     box-sizing: border-box;
     width: 100%;
     height: 60px;
     background-color: #fff;
-    // overflow: hidden;
-    // background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.8);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     box-shadow: 0px 3px 3px 0px rgba(42, 130, 228, 0.2);
@@ -101,20 +117,20 @@ let toModular = function (e) {
 
             li {
                 color: #505050;
-                // margin: 0 10px;
+                margin: 0 10px;
                 font-size: 16px;
-                // line-height: 27px;
-                // height: 27px;
+                line-height: 27px;
                 height: 100%;
                 line-height: 60px;
                 padding: 0 30px;
-                // border-radius: 7px;
                 cursor: pointer;
+                transition: all .5s;
             }
 
             .li_active {
+                box-sizing: border-box;
                 color: #0077f7;
-                border-top: 3px solid #0077f7;
+                border-top: 2px solid #0077f7;
                 background-color: rgba(64, 158, 255, 0.16);
             }
         }
@@ -138,7 +154,7 @@ let toModular = function (e) {
                 margin: 0 40px 0 10px;
             }
 
-            li:nth-child(n+3) {
+            li:nth-child(n + 3) {
                 margin: 0 7px;
             }
 
