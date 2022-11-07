@@ -146,10 +146,11 @@ onMounted(() => {
 
         .list_hot {
             width: 20%;
-            height: 100%;
-            // box-sizing: border-box;
-            // padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 119, 247, 0.33);
+            height: 100%;	
+            box-sizing: border-box;
+            /* padding: 10px; */
+            /* box-shadow: 0 0 10px rgba(0, 119, 247, 0.33); */
+			box-shadow: 0 0 10px 4px #d0d0d0;
 
             .title_weibo {
                 box-sizing: border-box;
@@ -189,9 +190,9 @@ onMounted(() => {
 
             ul {
                 width: 100%;
-                height: 100%;
+                height: calc(100% - 30px);
                 box-sizing: border-box;
-                padding: 10px;
+				padding-top: 10px;
 
                 li {
                     display: flex;
@@ -200,6 +201,8 @@ onMounted(() => {
                     height: 30px;
                     line-height: 30px;
                     overflow: hidden;
+					box-sizing: border-box;
+					padding:10px;
 
                     span:nth-child(1) {
                         display: inline-block;
