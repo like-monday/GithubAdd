@@ -11,8 +11,8 @@
                 </ul>
             </div>
             <ul class="date_weather">
-                <li>2022年10月10日</li>
-                <li>星期五</li>
+                <li>{{date.year}}年{{date.month}}月{{date.day}}日</li>
+                <li>星期{{date.week}}</li>
                 <li>19℃</li>
                 <li>深圳</li>
                 <li>☀</li>
@@ -64,6 +64,27 @@ let toModular = function (e) {
     }
 }
 
+let date = reactive({})
+date.year = new Date().getFullYear()
+date.month = new Date().getMonth()+1
+date.day = new Date().getDate()
+date.week = new Date().getDay()
+if(date.week == 1){
+	date.week = '一'
+}else if(date.week == 2){
+	date.week = '二'
+}else if(date.week == 3){
+	date.week = '三'
+}else if(date.week == 4){
+	date.week = '四'
+}else if(date.week == 5){
+	date.week = '五'
+}else if(date.week == 6){
+	date.week = '六'
+}else if(date.week == 7){
+	date.week = '日'
+}
+
 if ($router.currentRoute.value.path == '/Web') {
     arr[1].value = true
 } else if ($router.currentRoute.value.path == '/home') {
@@ -83,12 +104,13 @@ if ($router.currentRoute.value.path == '/Web') {
     box-sizing: border-box;
     width: 100%;
     height: 60px;
-    background-color: #fff;
     overflow: hidden;
+	/* background-color: #304156; */
+	/* background-color:rgb(5, 4, 44); */
     background: rgba(255, 255, 255, 0.8);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-    box-shadow: 0px 3px 3px 0px rgba(42, 130, 228, 0.2);
+    box-shadow: 0px 3px 3px 0px rgba(42, 130, 228, 0.2);	
 
     .w {
         display: flex;
@@ -116,7 +138,6 @@ if ($router.currentRoute.value.path == '/Web') {
             align-items: center;
 
             li {
-                color: #505050;
                 margin: 0 10px;
                 font-size: 16px;
                 line-height: 27px;
@@ -131,6 +152,7 @@ if ($router.currentRoute.value.path == '/Web') {
                 box-sizing: border-box;
                 color: #0077f7;
                 border-top: 2px solid #0077f7;
+                /* border-bottom: 2px solid #0077f7; */
                 background-color: rgba(64, 158, 255, 0.16);
             }
         }
