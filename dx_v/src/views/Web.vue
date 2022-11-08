@@ -29,7 +29,7 @@
         <ul class="card">
             <li v-for="(item, index) in 4">
                 <a href="javascript:;" class="content">
-                    <img src="../assets/react.svg" alt="">
+                    <img src="../assets/images/react.svg" alt="">
                     <span>React</span>
                 </a>
                 <div class="describe">构建用户界面的JavaScript库</div>
@@ -208,13 +208,13 @@ let toModular = function (e) {
         }
 
         li:hover .homeImg {
-            background: url('../assets/主页(W).svg');
+            background: url('../assets/images/主页.svg');
             background-size: 30px;
             transform: translateY(0);
         }
 
         li:hover .githubImg {
-            background: url('../assets/github-fill(W).svg');
+            background: url('../assets/images/github-fill.svg');
             background-size: 30px;
             transform: translateY(0);
         }

@@ -1,21 +1,21 @@
 <template>
-    <!-- 常用工具 -->
-    <div class="commonTools">
+    <!-- 技术社区 -->
+    <div class="technology">
         <div class="title">
             <span>技术社区</span>
         </div>
         <div class="line"></div>
         <div class="content">
             <ul>
-                <li v-for="item in 18">
+                <li v-for="item in technologyData.arr">
                     <div class="bg"></div>
                     <div class="text">
                         <a href="javascript:;">
                             <div class="img_title">
-                                <img src="../../assets/images/cnsd.ico" alt="">
-                                <span>CSDN</span>
+                                <img :src="item.icon" alt="">
+                                <span>{{item.name}}</span>
                             </div>
-                            <div class="describe">专业开发者社区</div>
+                            <div class="describe">{{item.describes}}</div>
                         </a>
                     </div>
                 </li>
@@ -25,12 +25,33 @@
 </template>
 
 <script setup>
-import { } from 'vue'
+import { onMounted,reactive} from 'vue'
+import axios from 'axios'
+
+let search_form = reactive({
+  pagesize: 100, // 每页展示条数
+  page: 1, // 当前页数
+  type: 'technology'
+})
+let technologyData = reactive({
+  arr:[]
+})
+
+onMounted(() => {
+  axios({
+    method: 'post',
+    data: search_form,
+    url: 'http://localhost:3000/api/document_type'
+  }).then(res => {
+    console.log(res);
+    technologyData.arr = res.data.data
+  })
+});
 
 </script>
  
 <style lang = "less" scoped>
-.commonTools {
+.technology {
     width: 100%;
     border-radius: 8px;
     box-sizing: border-box;
@@ -70,6 +91,7 @@ import { } from 'vue'
                 margin-right: 10px;
                 align-items: center;
                 overflow: hidden;
+                background-color: #f5f7fd;
 
                 .text {
                     position: absolute;
@@ -105,6 +127,7 @@ import { } from 'vue'
                 .bg {
                     width: 0;
                     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+                    background-color: #2351da;
                 }
 
             }

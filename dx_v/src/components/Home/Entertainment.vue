@@ -1,8 +1,8 @@
 <template>
-    <!-- 技术社区 -->
+    <!-- 日常摸鱼 -->
     <div class="entertainment">
         <div class="title">
-            <span>技术社区</span>
+            <span>日常摸鱼</span>
         </div>
         <div class="line"></div>
         <div class="content">

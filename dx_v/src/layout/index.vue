@@ -17,5 +17,7 @@ import {  } from 'vue'
   .w{
     max-width: 1440px;
     margin: 0 auto;
+    margin-top: 70px;
+    overflow: hidden;
   }
 </style>

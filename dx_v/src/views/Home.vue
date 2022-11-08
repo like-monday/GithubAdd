@@ -168,7 +168,6 @@ const scrollTop = () => {
     min-width: 1100px;
     margin: 0 auto;
     overflow: hidden;
-    margin-top: 70px;
 
     .w {
         width: 100%;
@@ -176,12 +175,12 @@ const scrollTop = () => {
 
         .zw {
             width: 111px;
-            height: 700px;
+            height: 600px;
 
             #navbar {
                 border: 1px solid #000;
-                width: 100px;
-                height: 700px;
+                width: 90px;
+                height: 600px;
                 background-color: #fff;
                 border-radius: 10px;
 
@@ -240,9 +239,9 @@ const scrollTop = () => {
     position: fixed;
     width: 60px;
     height: 60px;
-    bottom: 300px;
+    bottom: 200px;
     cursor: pointer;
-    right: 50px;
+    right: 30px;
     background: url(../assets/images/goTop.png);
     background-size: 60px 60px;
 }
