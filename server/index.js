@@ -9,6 +9,7 @@ const app = express()
 
 // 解决请求头不能携带数据的问题
 // npm install cors
+const cors = require('cors')
 app.options('*', cors());
 
 //采用设置所有均可访问的方法解决跨域问题
