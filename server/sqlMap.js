@@ -7,11 +7,9 @@ const sqlMap = {
 		del: 'delete from document where id = ?',
 		update: 'update document set name = ?,describes = ?,https = ?,icon = ?,lastdate = ? where id = ?',
 	},
-	sqlMap_videos: {
-		add: 'insert into test(name,age) values (?,?)',
-		show: 'select * from videos',
-		del: 'delete from test where stu_Id = ?',
-		update: 'update test set stu_name = ?,stu_sex = ?,stu_college = ?,stu_class = ? where stu_Id = ?',
+	sqlMap_user: {
+		getuser: 'select * from user',
+		setuser: '',
 	}
 }
 

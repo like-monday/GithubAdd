@@ -7,7 +7,7 @@ const router = express.Router()
 const mysql = require('mysql')
 //引入sql语句
 const $sql  = require('../sqlMap')
-// console.log("@@@@",$sql.sqlMap_document)
+
 // 连接数据库
 const conn = mysql.createConnection(models.mysql)
 conn.connect()
@@ -23,6 +23,29 @@ const jsonWrite = function (res, ret) {
         )
     }
 }
+
+router.all('/*',(req,res,next)=>{
+	const sqluser = $sql.sqlMap_user.getuser
+	conn.query(sqluser, function (err, result) {
+	    if (err) {
+	        console.log(err)
+	    }
+	    if (result) {
+			console.log(result[0].password);
+			for(let i = 0;i < result.length;i++){
+				let getAccount = 'admin' // 这里从请求头获取
+				let getPassword = 'admin' // 这里从请求头获取
+				let role = result[i].role // 这个字段代表是管理员，有最高权限
+				if(result[i].account == getAccount && result[i].password == getPassword && role == 'admin'){
+					// 能进来代表具有权限
+					next()
+				}
+			}
+	    }
+	})
+	next()
+})
+
 // 接口：增加信息
 router.post('/document', (req, res) => {
     const sql = $sql.sqlMap_document.add
@@ -143,6 +166,11 @@ router.put('/document', (req, res) => {
             jsonWrite(res, message)
         }
     })
+})
+
+// 接口：修改信息
+router.get('/test', (req, res) => {
+    res.send('获取成功??')
 })
 
 module.exports = router

@@ -7,11 +7,6 @@ const express = require('express')
 
 const app = express()
 
-// 解决请求头不能携带数据的问题
-// npm install cors
-const cors = require('cors')
-app.options('*', cors());
-
 //采用设置所有均可访问的方法解决跨域问题
 app.all("*", function (req, res, next) {
     //设置允许跨域的域名，*代表允许任意域名跨域
@@ -33,5 +28,5 @@ app.use(bodyParser.urlencoded({
 
 app.use('/api', StuApi)
 // 监听端口
-app.listen(3000)
-console.log('success listen at port:3000......')
+app.listen(5000)
+console.log('success listen at port:5000......')
