@@ -26,6 +26,7 @@
 
 <script setup>
 import { onMounted,reactive} from 'vue'
+import {reqDocument} from '../../api/Document/index'
 import axios from 'axios'
 
 let search_form = reactive({
@@ -38,14 +39,20 @@ let technologyData = reactive({
 })
 
 onMounted(() => {
-  axios({
-    method: 'post',
-    data: search_form,
-    url: 'http://localhost:3000/api/document_type'
-  }).then(res => {
-    console.log(res);
-    technologyData.arr = res.data.data
+  reqDocument(search_form).then((res)=>{
+    if(res.status == 200){
+      technologyData.arr = res.data.data
+    }
+    console.log('接口接收数据',res);
   })
+  // axios({
+  //   method: 'post',
+  //   data: search_form,
+  //   url: 'http://localhost:3000/api/document_type'
+  // }).then(res => {
+  //   console.log(res);
+  //   technologyData.arr = res.data.data
+  // })
 });
 
 </script>

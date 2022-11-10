@@ -8,54 +8,41 @@
     <div class="line"></div>
     <div class="content">
       <ul>
-        <li v-for="(item, index) in commonData.arr ">
-          <img :src="item.icon" alt="">
-          <span>{{ item.name }}</span>
+        <li v-for="(item, index) in commonToolsData.arr ">
+          <a :href="item.https" target="_blank">
+            <img :src="item.icon" alt="">
+            <span>{{ item.name }}</span>
+          </a>
         </li>
       </ul>
     </div>
   </div>
-  
+
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, onBeforeUnmount, watch, onUpdated, reactive, toRefs, ref } from 'vue'
 import {
-  reqDocument,
-  updateDocument,
-  addDocument,
-  deleteDocument,
+  reqDocument
 } from "../../api/Document/index";
-import axios from 'axios'
 
 let search_form = reactive({
   pagesize: 100, // 每页展示条数
   page: 1, // 当前页数
   type: 'CommonTools'
 })
-let list_web = reactive([])
-let commonData = reactive({
-  arr:['小明','小红']
+
+let commonToolsData = reactive({
+  arr: []
 })
-// let getDocuments = function () { 
-//   reqDocument(search_form).then((result) => {
-//         console.log("获取信息列表", result.data.data);
-//         commonToolsData = result.data.data
-//         console.log(commonToolsData);
-//       })
-//  }
-function showData () { 
-  commonData.arr = ['下辖','洪都']
- }
-onMounted(() => {
-  axios({
-    method: 'post',
-    data: search_form,
-    url: 'http://localhost:3000/api/document_type'
-  }).then(res => {
-    console.log(res);
-    commonData.arr = res.data.data
+
+let getDocuments = function () {
+  reqDocument(search_form).then((result) => {
+    commonToolsData.arr = result.data.data
   })
+}
+onMounted(() => {
+  getDocuments()
 });
 
 </script>

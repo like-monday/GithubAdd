@@ -7,8 +7,7 @@ export const reqDocument = (data) =>
     url: `document_type`,
     method: "post",
     data
-  },
-  console.log(data));
+  });
 
 // 修改网站信息
 export const updateDocument = (data) =>

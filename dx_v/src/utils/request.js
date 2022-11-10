@@ -2,7 +2,7 @@ import axios from "axios";
 
 // create an axios instance
 const service = axios.create({
-  baseURL: "http://localhost:3000/api", // url = base url + request url
+  baseURL: "http://43.139.80.187:5000/api", // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 50000, // request timeout
 });

@@ -10,7 +10,7 @@
                 <li v-for="item in 18">
                     <a href="javascript:;">
                         <div class="img_title">
-                            <img src="../../assets/images/cnsd.ico" alt="">
+                            <img src="" alt="">
                             <span>CSDN</span>
                         </div>
                         <div class="describe">专业开发者社区</div>
