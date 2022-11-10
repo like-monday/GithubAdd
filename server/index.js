@@ -7,6 +7,10 @@ const express = require('express')
 
 const app = express()
 
+// 解决请求头不能携带数据的问题
+// npm install cors
+app.options('*', cors());
+
 //采用设置所有均可访问的方法解决跨域问题
 app.all("*", function (req, res, next) {
     //设置允许跨域的域名，*代表允许任意域名跨域
