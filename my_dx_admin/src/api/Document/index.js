@@ -1,5 +1,5 @@
 // 该模块为技术文档
-import request from "@/utils/request2";
+import request from "../../utils/request";
 
 // 获取全部网站信息
 export const reqDocument = (data) =>

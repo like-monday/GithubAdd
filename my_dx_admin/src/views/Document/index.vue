@@ -170,12 +170,12 @@ export default {
     // 修改信息
     addOrUpdateDocument () {
       updateDocument(this.tmForm).then((result) => {
+        this.dialogFormVisible = false;
         if (result.data.status === 0) {
           this.$message({
             message: result.data.message,
             type: "success",
           });
-          this.dialogFormVisible = false;
           this.getDocument();
         } else {
           this.$message.error("修改失败");
@@ -185,15 +185,15 @@ export default {
     // 添加数据
     addDocuments () {
       addDocument(this.tmForm).then((result) => {
+        this.dialogFormVisible = false;
         if (result.data.status === 0) {
           this.$message({
             message: result.data.message,
             type: "success",
           });
-          this.dialogFormVisible = false;
           this.getDocument();
-        } else {
-          this.$message.error("添加失败");
+        }else{
+          this.$message.error(result.data.message);
         }
       })
     }

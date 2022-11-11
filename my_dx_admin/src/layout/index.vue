@@ -1,0 +1,35 @@
+<template>
+  <div id="layout">
+    <div class="leftmenu">
+      <LeftMenu />
+    </div>
+    <div class="navbar">
+      <NavBar />
+    </div>
+  </div>
+</template>
+
+<script>
+import NavBar from './NavBar'
+import LeftMenu from './LeftMenu'
+export default {
+  name: 'layout',
+  components: {
+    NavBar,
+    LeftMenu
+  }
+}
+</script>
+
+<style scoped lang='less'>
+#layout {
+  display: flex;
+  .navbar {
+    width: 100%;
+    float: right;
+  }
+
+  .leftmenu {
+  }
+}
+</style>
