@@ -2,19 +2,8 @@
   <div id="Document">
     <el-row>
       <el-button type="primary" icon="el-icon-plus" @click="showDialog">添加</el-button>
-      <el-select class="select" v-model="modularValue" clearable placeholder="请选择模块" @change="selectChange">
-          <el-option
-            v-for="item in modularOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
     </el-row>
-    <el-table :data="documentData" style="width: 100%" fit border  v-loading="tableLoading"
-    element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)">
+    <el-table :data="documentData" style="width: 100%" fit border>
       <el-table-column align="center" prop="prop" label="序号" type="index" width="60">
       </el-table-column>
       <el-table-column prop="name" label="网站名称" width="120">
@@ -89,24 +78,12 @@ export default {
   data () {
     return {
       total: 100, // 总条数
-      tableLoading: true,
       search_form: {
         pagesize: 5, // 每页展示条数
         page: 1, // 当前页数
         type: 'document'
       },
       documentData: [],
-      modularValue:'document',
-      modularOptions: [{ // 切换模块
-                value: 'document',
-                label: '文档数据'
-              }, {
-                value: 'technology',
-                label: '技术社区'
-              }, {
-                value: 'CommonTools',
-                label: '常用工具'
-              }],
       // 弹出对话框收集的内容
       tmForm: {
         name: "",
@@ -136,12 +113,11 @@ export default {
     },
     //获取信息列表
     getDocument () {
-      this.tableLoading = true
+      // console.log('发送的数据：',JSON.stringify(this.search_form))
       reqDocument(this.search_form).then((result) => {
-        // console.log("修改后的获取信息列表", result);
+        console.log("修改后的获取信息列表", result);
         this.total = result.data.total
         this.documentData = result.data.data;
-        this.tableLoading = false
       })
     },
     // 点击添加按钮
@@ -154,7 +130,7 @@ export default {
         icon: "",
         lastdate: this.$formateDate("YYYY-mm-dd HH:MM", new Date()),
         id: "",
-        type: this.search_form.type
+        type: "document"
       }
     },
     // 修改按钮
@@ -180,17 +156,7 @@ export default {
             type: "success",
           });
           this.dialogFormVisible = false;
-          reqDocument(this.search_form).then((result) => {
-            console.log("修改后的获取信息列表", result);
-            if(result.data.data.length == 0 ){
-              if (this.search_form.page < 1) {
-                this.search_form.page = 1
-              }else{
-                this.search_form.page += -1
-              }
-            }
-            this.getDocument();
-          })
+          this.getDocument();
         } else {
           this.$message.error("删除失败");
         }
@@ -204,12 +170,12 @@ export default {
     // 修改信息
     addOrUpdateDocument () {
       updateDocument(this.tmForm).then((result) => {
+        this.dialogFormVisible = false;
         if (result.data.status === 0) {
           this.$message({
             message: result.data.message,
             type: "success",
           });
-          this.dialogFormVisible = false;
           this.getDocument();
         } else {
           this.$message.error("修改失败");
@@ -219,22 +185,17 @@ export default {
     // 添加数据
     addDocuments () {
       addDocument(this.tmForm).then((result) => {
+        this.dialogFormVisible = false;
         if (result.data.status === 0) {
           this.$message({
             message: result.data.message,
             type: "success",
           });
-          this.dialogFormVisible = false;
           this.getDocument();
-        } else {
-          this.$message.error("添加失败");
+        }else{
+          this.$message.error(result.data.message);
         }
       })
-    },
-    // select变化
-    selectChange(row){
-      this.search_form.type = row
-      this.getDocument()
     }
   },
 };
@@ -274,10 +235,6 @@ export default {
 
 .el-row {
   margin-bottom: 10px;
-
-  .select{
-    float:right;
-  }
 }
 
 .el-pagination {

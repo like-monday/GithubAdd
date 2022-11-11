@@ -5,8 +5,8 @@ import request from "@/utils/request2";
 export const reqDocument = (data) =>
   request({
     url: `document_type`,
-    method: "post",
-    data
+    method: "get",
+    params:data
   });
 
 // 修改网站信息
