@@ -4,8 +4,10 @@ const fs = require('fs')
 const path = require('path')
 const bodyParser = require('body-parser')
 const express = require('express')
+const cors = require('cors')
 
 const app = express()
+app.options('*', cors());
 
 //采用设置所有均可访问的方法解决跨域问题
 app.all("*", function (req, res, next) {
