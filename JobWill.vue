@@ -1,4 +1,4 @@
-\<template>
+<template>
   <!-- 校招生专区-工作日志 -->
   <div id="JobWill">
     <div class="SubMenu"><SubMenu /></div>
@@ -106,6 +106,28 @@
             <div class="date_ymd">{{ dialog_date }}</div>
           </div>
           <div class="title">实习日志</div>
+        </div>
+        <div class="dialog_daily_table">
+          <table border="1">
+            <tr>
+              <th>日期/星期</th>
+              <th>产线</th>
+              <th>工站</th>
+              <th>实习内容和心得</th>
+            </tr>
+            <tr>
+              <td>
+                2020/01/04 <br />
+                星期一
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="4"></td>
+            </tr>
+          </table>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -397,6 +419,7 @@ export default {
   }
   .dialog_daily {
     .dialog_daily_header {
+      position: relative;
       .date {
         .date_week {
           width: 60px;
@@ -424,9 +447,35 @@ export default {
         }
       }
       .title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 10px;
         width: 80px;
-        height: 40px;
-        border: #202020;
+        height: 35px;
+        border: 2px dashed #242424;
+        border-radius: 10px;
+        line-height: 35px;
+        padding: 0 5px;
+        text-align: center;
+        font-size: 18px;
+      }
+    }
+    .dialog_daily_table {
+      margin-top: 10px;
+      table {
+        border: black;
+        width: 100%;
+        th {
+          font-size: 17px;
+          background-color: #4f81bd;
+          color: black;
+          padding: 5px;
+        }
+        td {
+          text-align: center;
+          padding: 5px;
+        }
       }
     }
   }
