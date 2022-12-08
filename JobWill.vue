@@ -1,482 +1,721 @@
 <template>
-  <!-- 校招生专区-工作日志 -->
-  <div id="JobWill">
-    <div class="SubMenu"><SubMenu /></div>
+  <div id="ScholarshipIssuanceInquiry">
+    <!-- 标题 Start -->
+    <div class="academicEducaton-title">奖学金发放查询</div>
+    <el-divider></el-divider>
+    <!-- 标题 End -->
 
-    <!-- 整体日历控件start -->
-    <div class="content">
-      <div class="calendar">
-        <!-- 头部状态描述start -->
-        <div class="calendar_header">
-          <div class="calendar_header_date">
-            <div class="calendar_header_month">{{ value.getMonth() + 1 }}</div>
-            <div class="calendar_header_year">{{ value.getFullYear() }}</div>
-          </div>
-          <!-- 状态示例start -->
-          <div class="ExampleState">
-            <div class="Adopt">
-              <p></p>
-              <span>已通过</span>
-            </div>
-            <div class="Signing">
-              <p></p>
-              <span>签核中</span>
-            </div>
-            <div class="NotCompleted">
-              <p></p>
-              <span>待完成</span>
-            </div>
-          </div>
-          <!-- 状态示例end -->
+    <!-- 查询条件 Start -->
+    <ul class="condition">
+      <li class="condition-item">
+        <div class="condition-key">工号:</div>
+        <div class="condition-value">
+          <el-input
+            class="condition-input"
+            v-model="condition.empno"
+            size="mini"
+            placeholder="请输入"
+            clearable
+          />
         </div>
-        <!-- 头部状态描述end -->
-
-        <!-- 日历start -->
-        <el-calendar v-model="value" :first-day-of-week="7">
-          <template slot="dateCell" slot-scope="{ date, data }">
-            <div
-              id="calendar_day"
-              @click="Month(data)"
-              :class="{ calendar_day_bgc: getyellodate(date, data) }"
-            >
-              <div class="week" v-if="date.getDay() == 6">周</div>
-              <div
-                class="week"
-                v-if="
-                  getMonthLastDate(data.day) == date.getDate() ||
-                  getMonthLastDate(data.day) == date.getDate() ||
-                  getMonthLastDate(data.day) == date.getDate() ||
-                  getMonthLastDate(data.day) == date.getDate()
-                "
-              >
-                月
-              </div>
-              <div
-                class="week"
-                v-if="
-                  getMonthLastDate(data.day) == date.getDate() &&
-                  date.getDay() == 6
-                "
-              >
-                月/周
-              </div>
-              <div
-                class="spandate"
-                :class="{ spandate_fc: getyellodate(date, data) }"
-              >
-                {{ data.day.split("-").slice(2).join("-") }}
-              </div>
-              <div class="state">
-                <p class="red" v-if="false"></p>
-                <p class="green" v-if="false"></p>
-                <p class="yello" v-if="getyellodate(date, data)"></p>
-              </div>
-            </div>
-          </template>
-        </el-calendar>
-        <!-- 日历end -->
-
-        <!-- 切换月份按钮start -->
-        <div class="changeDate">
-          <el-button @click="skip('preMonth')" type="warning" round size="mini"
-            ><i class="el-icon-arrow-left"></i>上个月
-          </el-button>
-          <el-button @click="skip('today')" type="info" round size="mini"
-            >今天</el-button
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">姓名:</div>
+        <div class="condition-value">
+          <el-input
+            class="condition-input"
+            v-model="condition.name"
+            size="mini"
+            placeholder="请输入"
+            clearable
+          />
+        </div>
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">事业群:</div>
+        <div class="condition-value">
+          <el-input
+            class="condition-input"
+            v-model="condition.group"
+            size="mini"
+            placeholder="请输入"
+            clearable
+          />
+        </div>
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">厂区:</div>
+        <div class="condition-value">
+          <el-select
+            class="condition-input"
+            v-model="condition.site"
+            size="mini"
+            placeholder="请选择"
+            clearable
           >
-          <el-button @click="skip('postMonth')" type="warning" round size="mini"
-            >下个月<i class="el-icon-arrow-right"></i>
-          </el-button>
+            <el-option
+              v-for="item in dropDownList.site"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
         </div>
-        <!-- 切换月份按钮end -->
-      </div>
-    </div>
-    <!-- 整体日历控件start -->
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">就读年份:</div>
+        <div class="condition-value">
+          <el-date-picker
+            class="condition-input"
+            v-model="condition.year"
+            type="year"
+            size="mini"
+            value-format="yyyy"
+            placeholder="请选择"
+            clearable
+          >
+          </el-date-picker>
+        </div>
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">事业处:</div>
+        <div class="condition-value">
+          <el-select
+            class="condition-input"
+            v-model="condition.office"
+            size="mini"
+            placeholder="请选择"
+            clearable
+          >
+            <el-option
+              v-for="item in dropDownList.office"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">批次:</div>
+        <div class="condition-value">
+          <el-select
+            class="condition-input"
+            v-model="condition.batch"
+            size="mini"
+            placeholder="请选择"
+            clearable
+          >
+            <el-option
+              v-for="item in dropDownList.batch"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">就读层次:</div>
+        <div class="condition-value">
+          <el-select
+            class="condition-input"
+            v-model="condition.studyLevel"
+            size="mini"
+            placeholder="请选择"
+            clearable
+          >
+            <el-option
+              v-for="item in dropDownList.studyLevel"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </li>
+      <li class="condition-item">
+        <div class="condition-key">就读学校:</div>
+        <div class="condition-value">
+          <el-select
+            class="condition-input"
+            v-model="condition.school"
+            size="mini"
+            placeholder="请选择"
+            clearable
+          >
+            <el-option
+              v-for="item in dropDownList.school"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </li>
+      <li class="condition-item condition-double">
+        <div class="condition-key">发放起止时间:</div>
+        <div class="condition-value">
+          <el-date-picker
+            v-model="condition.startEndTime"
+            type="daterange"
+            size="mini"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          >
+          </el-date-picker>
+        </div>
+      </li>
+    </ul>
+    <!-- 查询条件 End -->
 
-    <!-- 日报弹出框start -->
-    <el-dialog title="提示" :visible.sync="dialogVisibles.daily" width="50%">
-      <div class="dialog_daily">
-        <div class="dialog_daily_header">
-          <div class="date">
-            <div class="date_week">
-              <span>第</span>
-              <span>1</span>
-              <span>周</span>
-            </div>
-            <div class="date_ymd">{{ dialog_date }}</div>
-          </div>
-          <div class="title">实习日志</div>
-        </div>
-        <div class="dialog_daily_table">
-          <table border="1">
-            <tr>
-              <th>日期/星期</th>
-              <th>产线</th>
-              <th>工站</th>
-              <th>实习内容和心得</th>
-            </tr>
-            <tr>
-              <td>
-                2020/01/04 <br />
-                星期一
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="4"></td>
-            </tr>
-          </table>
+    <!-- 操作按钮 Start -->
+    <div class="operate">
+      <el-button
+        type="primary"
+        class="el-icon-search"
+        size="mini"
+        :loading="loading"
+      >
+        高级查询
+      </el-button>
+      <el-button
+        type="success"
+        class="el-icon-download"
+        size="mini"
+        :loading="exportLoading"
+      >
+        Excel导出
+      </el-button>
+    </div>
+    <!-- 操作按钮 End -->
+
+    <!-- 表格数据 Start -->
+    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
+      <el-table-column type="index" label="序号" width="50px" align="center" />
+      <el-table-column
+        v-for="(item, index) in tableHeader"
+        :key="index"
+        :prop="item.prop"
+        :label="item.label"
+        :width="item.width"
+        align="center"
+      />
+      <el-table-column label="操作" align="center">
+        <template>
+          <el-link
+            type="primary"
+            icon="el-icon-document"
+            title="查看"
+            :underline="false"
+            @click="showInfo"
+          />
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 表格数据 End -->
+
+    <!-- 彈窗 start -->
+    <el-dialog
+      class="dialog_info"
+      :visible.sync="dialogVisible"
+      :show-close="showClo"
+      :close-on-click-modal="showModal"
+      width="70%"
+    >
+      <div slot="title" class="dialog_title">
+        <div>【2022年集团学历教育 "委培奖学金" 】签核确认</div>
+        <i class="el-icon-close" @click="dialogVisible = false"></i>
+      </div>
+      <div class="main">
+        <ul class="ul-one">
+          <li>
+            <span>工號 :</span>
+            <span>F1334211</span>
+          </li>
+          <li>
+            <span>姓名 :</span>
+            <span>歐陽子望</span>
+          </li>
+          <li>
+            <span>廠區 :</span>
+            <span>龍華</span>
+          </li>
+          <li>
+            <span>事業群 :</span>
+            <span>CNSBG</span>
+          </li>
+          <li>
+            <span>部門 :</span>
+            <span>MIS</span>
+          </li>
+
+          <li>
+            <span>就讀班級 :</span>
+            <span>20軟件15班</span>
+          </li>
+          <li>
+            <span>就讀學校 :</span>
+            <span>富士康大學</span>
+          </li>
+          <li>
+            <span>就讀層次 :</span>
+            <span>本科</span>
+          </li>
+          <li>
+            <span>就讀專業 :</span>
+            <span>計算機科學與技術</span>
+          </li>
+          <li>
+            <span>是否申請委培獎學金 :</span>
+            <el-select
+              v-model="options_value"
+              placeholder="请选择"
+              class="apply"
+              size="mini"
+            >
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </li>
+        </ul>
+
+        <ul class="ul-one">
+          <li>
+            <span>獎學金應發放次數 :</span>
+            <span>2</span>
+          </li>
+          <li>
+            <span>獎學金已發放次數 :</span>
+            <span>2</span>
+          </li>
+          <li>
+            <span>獎學金確認未發放次數 :</span>
+            <span>0</span>
+          </li>
+          <li>
+            <span>獎學金待發放次數 :</span>
+            <span>0</span>
+          </li>
+        </ul>
+        <ul class="ul-one">
+          <li>
+            <span>獎學金應發放金額 :</span>
+            <span>2</span>
+          </li>
+          <li>
+            <span>獎學金已發放金額 :</span>
+            <span>2</span>
+          </li>
+          <li>
+            <span>獎學金確認未發放金額 :</span>
+            <span>0</span>
+          </li>
+          <li>
+            <span>獎學金待發放金額 :</span>
+            <span>0</span>
+          </li>
+        </ul>
+      </div>
+      <div class="footer">
+        <div class="title">簽核信息</div>
+        <div>
+          <el-table
+            height="190"
+            size="mini"
+            :data="dialog_table"
+            style="width: 100%"
+          >
+            <el-table-column
+              align="center"
+              type="index"
+              label="編號"
+              width="80"
+            >
+            </el-table-column>
+            <el-table-column
+              align="center"
+              prop="grant_num"
+              label="第N次發放"
+              width="180"
+            >
+            </el-table-column>
+            <el-table-column
+              align="center"
+              prop="grant_date"
+              label="第N次發放時間"
+              width="180"
+            >
+            </el-table-column>
+            <el-table-column align="center" prop="invoice" label="學員上傳發票">
+              <template slot-scope="props">
+                <span class="invoice_span">{{
+                  dialog_table[props.$index].invoice
+                }}</span>
+                <i class="el-icon-upload" @click="upload"></i>
+              </template>
+            </el-table-column>
+            <el-table-column
+              align="center"
+              prop="confirm"
+              label="其他審核及確認"
+            >
+            </el-table-column>
+            <el-table-column
+              align="center"
+              prop="confirm_date"
+              label="確認時間"
+            >
+            </el-table-column>
+          </el-table>
         </div>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisibles.daily = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisibles.daily = false"
-          >确 定</el-button
-        >
-      </span>
     </el-dialog>
-    <!-- 日报弹出框end -->
+    <!-- 彈窗 end -->
+
+    <!-- 分页 Start -->
+    <el-pagination
+      class="pagination"
+      :current-page.sync="pagination.current"
+      :page-size="pagination.pageSize"
+      :page-sizes="pagination.pageSizes"
+      :total="pagination.total"
+      layout="total, sizes, prev, pager, next, jumper"
+      @current-change="changePage"
+      @size-change="changeSize"
+    >
+    </el-pagination>
+    <!-- 分页 End -->
   </div>
 </template>
 
 <script>
-import SubMenu from './SubMenu.vue'
+import tableAutoWidth from '@/tools/tableAutoWidth'
 export default {
+  name: 'CommissioningAgreement',
   data () {
     return {
-      value: new Date(), // 日历组件日期
-      activeday: [],
-      dialogVisibles: { // 对话框控制flag
-        daily: false,
-        weekly: false,
-        monthly: false
+      condition: { // 查询条件
+        empno: '', // 工号
+        name: '', // 姓名
+        group: '', // 事业群
+        site: '', // 厂区
+        office: '', // 事业处
+        year: '', // 就读年份
+        school: '', // 就读学校
+        studyLevel: '', // 就读层次
+        startEndTime: '', // 发放奖学金起止时间
+        batch: '' // 批次
       },
-      dialog_date: ''
+      dropDownList: { // 下拉列表集合
+        site: [],
+        office: [],
+        school: [],
+        studyLevel: [],
+        batch: []
+      },
+      loading: false, // 是否正在加载数据
+      exportLoading: false, // 是否正在导出数据
+      tableData: [
+        {
+          empno: 'F155555',
+          name: '胖虎',
+          site: '龍華',
+          group: 'CNSBG',
+          division: 'MIS',
+          class: '',
+          category: '',
+          batch: '2',
+          awards: '一等獎',
+          shouldmoney: '5000',
+          shouldnum: '1'
+        },
+        {
+          empno: 'F155555',
+          name: '小青蛙',
+          site: '龍華',
+          group: 'CNSBG',
+          division: 'MIS',
+          class: '20计算机应用10班',
+          category: '學院獎學金',
+          batch: '2',
+          awards: '一等獎',
+          shouldmoney: '5000',
+          shouldnum: '1'
+        },
+        {
+          empno: 'F155555',
+          name: '小青蛙',
+          site: '龍華',
+          group: 'CNSBG',
+          division: 'MIS',
+          class: '20计算机应用10班',
+          category: '學院獎學金',
+          batch: '2',
+          awards: '一等獎',
+          shouldmoney: '5000',
+          shouldnum: '1'
+        },
+        {
+          empno: 'F155555',
+          name: '小青蛙',
+          site: '龍華',
+          group: 'CNSBG',
+          division: 'MIS',
+          class: '20计算机应用10班',
+          category: '學院獎學金',
+          batch: '2',
+          awards: '一等獎',
+          shouldmoney: '5000',
+          shouldnum: '1'
+        }
+      ], // 表格数据
+      tableHeader: [ // 表格表头
+        { prop: 'empno', label: '工号', width: '80' },
+        { prop: 'name', label: '姓名', width: '80' },
+        { prop: 'site', label: '厂区', width: '80' },
+        { prop: 'group', label: '事业群', width: '80' },
+        { prop: 'division', label: '部门', width: '80' },
+        { prop: 'class', label: '就读班级', width: '80' },
+        { prop: 'category', label: '奖学金类别', width: '80' },
+        { prop: 'batch', label: '批次', width: '80' },
+        { prop: 'awards', label: '奖项', width: '80' },
+        { prop: 'shouldmoney', label: '应发金额', width: '80' },
+        { prop: 'shouldnum', label: '应发次数', width: '80' }
+      ],
+      pagination: { // 分页
+        current: 1,
+        pageSize: 10,
+        pageSizes: [10, 15, 20, 30, 50],
+        total: 0
+      },
+      // 信息窗
+      dialogVisible: false,
+      showClo: false, // 关闭自带的按钮
+      showModal: false, // 点击其他地方不能关闭页面
+      // 信息窗口表格
+      dialog_table: [{
+        grant_num: 2,
+        grant_date: '2022/08/09',
+        invoice: '已上傳',
+        confirm: '已確認發放',
+        confirm_date: '2022/10/15'
+      },
+      {
+        grant_num: 2,
+        grant_date: '2022/08/09',
+        invoice: '已上傳',
+        confirm: '已確認發放',
+        confirm_date: '2022/10/15'
+      },
+      {
+        grant_num: 2,
+        grant_date: '2022/08/09',
+        invoice: '已上傳',
+        confirm: '已確認發放',
+        confirm_date: '2022/10/15'
+      },
+      {
+        grant_num: 2,
+        grant_date: '2022/08/09',
+        invoice: '已上傳',
+        confirm: '已確認發放',
+        confirm_date: '2022/10/15'
+      }],
+      options: [{
+        value: 'Y',
+        label: '是'
+      }, {
+        value: 'N',
+        label: '否'
+      }],
+      options_value: ''
     }
   },
-  components: { SubMenu },
   mounted () {
+    this.setTableWidth()
   },
   methods: {
-    // 判断传入日期是否在当前日期之前
-    getyellodate (date, data) {
-      //   console.log(date, data)
-      let nowDay = new Date().getDate()
-      let nowYear = new Date().getFullYear()
-      let nowMonth = new Date().getMonth() + 1
-      let changeDay = data.day.split('-')[2]
-      let changeMonth = data.day.split('-')[1]
-      let changeYear = data.day.split('-')[0]
-      //   console.log('当前年：', nowYear, changeYear)
-      if (nowYear >= changeYear) {
-        // console.log(parseInt(nowMonth) === parseInt(changeMonth))
-        if (parseInt(nowMonth) === parseInt(changeMonth)) {
-          if (nowDay > changeDay) {
-            return true
-          }
-        } else if (nowMonth > changeMonth) {
-          return true
-        }
-      }
-      return false
-    },
-    Month (data) {
-      console.log(data)
-      let isTrue = this.getyellodate(null, data)
-      if (isTrue) {
-        this.dialog_date = data.day
-        this.dialogVisibles.daily = true
+    // 动态设置宽度
+    setTableWidth () {
+      let width = tableAutoWidth(this.tableData, 14)
+      let index = -1
+      for (let key in this.tableHeader) {
+        index++
+        this.tableHeader[key].width = width[index]
       }
     },
-    getMonthLastDate (data) {
-      let today = data.split('-')
-      let MonthLastDate = this.MonthDay(today[0], parseInt(today[1]))
-      return MonthLastDate
+    // 翻页
+    changePage (val) {
+      this.pagination.current = val
     },
-    // 判断是否有31号
-    MonthDay (year, month) {
-      switch (month) {
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12:
-          return 31
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-          return 30
-        case 2:
-          if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
-            return 29
-          } else {
-            return 28
-          }
-      }
+    // 每页条数变更
+    changeSize (val) {
+      this.pagination.current = 1
+      this.pagination.pageSize = val
     },
-    // 切换月份按钮
-    skip (flag) {
-      if (flag === 'preYear') this.value = new Date(this.value.setFullYear(this.value.getFullYear() - 1))
-      else if (flag === 'preMonth') this.value = new Date(this.value.setMonth(this.value.getMonth() - 1))
-      else if (flag === 'preDay') this.value = new Date(this.value.setDate(this.value.getDate() - 1))
-      else if (flag === 'today') this.value = new Date()
-      else if (flag === 'postDay') this.value = new Date(this.value.setDate(this.value.getDate() + 1))
-      else if (flag === 'postMonth') this.value = new Date(this.value.setMonth(this.value.getMonth() + 1))
-      else if (flag === 'postYear') this.value = new Date(this.value.setFullYear(this.value.getFullYear() + 1))
-    }
-  },
-  computed: {
-  },
-  watch: {
-    value (newVal, oldVal) {
+    showInfo () {
+      console.log(11111111)
+      this.dialogVisible = true
+    },
+    handleClose () {
+      console.log('窗口關閉了')
+    },
+    // 上传
+    upload () {
+      console.log('点击了上传')
     }
   }
 }
 </script>
 
-<style lang="scss">
-.content {
-  .calendar {
-    .el-calendar__header {
-      //   background-color: #57617c;
-      display: none;
-      .el-calendar__title {
-        font-size: 20px;
-      }
-      .el-calendar__button-group {
-        // 隐藏原生按钮
-        display: none;
-      }
-    }
-
-    .el-calendar-table {
-      .el-calendar-day {
-        padding: 0;
-      }
-      thead {
-        th {
-          // 修改头部星期部分
-          background-color: #4f81bd;
-          border: 2px solid #ebeef5;
-          color: white;
-        }
-      }
-      td {
-        border-bottom: 2px solid #ebeef5;
-        border-right: 2px solid #ebeef5;
-      }
-    }
-  }
+<style>
+/*标题背景色*/
+.dialog_info .el-dialog__header {
+  background-color: #409eff;
+  padding: 10px 0;
 }
 </style>
-
 <style lang="scss" scoped>
-.dayEL .el-button--small {
-  border: none;
-}
-.dayEL .el-button {
-  background: transparent;
+.condition {
+  &-item {
+    display: inline-flex;
+    width: 33%;
+    height: 40px;
+    margin-bottom: 5px;
+  }
+
+  &-double {
+    width: 66%;
+  }
+
+  &-key {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 120px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 10px;
+    line-height: 40px;
+    text-align: right;
+    box-sizing: border-box;
+  }
+
+  &-value {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    height: 40px;
+  }
+
+  &-input {
+    width: 100%;
+  }
 }
 
-#JobWill {
+.operate {
+  margin-bottom: 15px;
+  text-align: right;
+}
+
+.table-operate {
   display: flex;
-  .content {
-    .calendar {
-      width: 70%;
-      margin-left: 80px;
-      .calendar_header {
-        display: flex;
-        justify-content: space-between;
-        .calendar_header_date {
-          display: flex;
-          .calendar_header_month {
-            width: 60px;
-            height: 60px;
-            border: 2px solid #e46c0a;
-            font-size: 40px;
-            font-weight: 600;
-            text-align: center;
-            line-height: 60px;
-            color: #e46c0a;
-          }
+  justify-content: space-between;
+  align-items: center;
+}
 
-          .calendar_header_year {
-            width: 60px;
-            height: 60px;
-            color: #fabf8e;
-            font-weight: 600;
-            font-size: 20px;
-            line-height: 60px;
-          }
-        }
+.pagination {
+  margin-top: 10px;
+  text-align: center;
+}
 
-        .ExampleState {
-          p {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 10px;
-          }
-          div {
-            display: flex;
-            align-items: center;
-            width: 100px;
-          }
+.dialog_info {
+  min-width: 800px;
 
-          .Adopt {
-            p {
-              background-color: #ff0000;
-            }
-          }
-          .Signing {
-            p {
-              background-color: #ffc000;
-            }
-          }
-          .NotCompleted {
-            p {
-              background-color: #92d050;
-            }
-          }
-        }
+  .dialog_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+
+    i {
+      margin-right: 15px;
+      cursor: pointer;
+    }
+
+    @keyframes turn {
+      0% {
+        transform: rotateZ(0deg);
       }
-
-      #calendar_day {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-        padding: 0;
-
-        .week {
-          box-sizing: border-box;
-          font-size: 13px;
-          height: 18px;
-          line-height: 18px;
-          position: absolute;
-          width: 70px;
-          right: -17px;
-          top: 10px;
-          text-align: center;
-          background-color: #f79646;
-          color: red;
-          transform: rotate(45deg);
-          // #dce6f2 表格蓝
-        }
-
-        .spandate {
-          width: 20px;
-          height: 20px;
-          margin: 0 auto;
-          margin-top: 25px;
-          font-weight: bold;
-          font-size: 20px;
-        }
-
-        .spandate_fc {
-          color: #558ed5;
-        }
-
-        .state {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          display: flex;
-          height: 10px;
-          padding: 5px;
-          p {
-            display: block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-          }
-          .red {
-            background-color: red;
-          }
-          .green {
-            background-color: greenyellow;
-          }
-          .yello {
-            background-color: rgb(255, 183, 0);
-          }
-        }
+      0% {
+        transform: rotateZ(180deg);
       }
+    }
 
-      .calendar_day_bgc {
-        background-color: #dce6f2;
-      }
+    i:hover {
+      font-size: 25px;
+      animation-name: turn;
+      animation-duration: 1s;
+      animation-iteration-count: 1;
+    }
+  }
 
-      .changeDate {
-        display: flex;
-        justify-content: center;
+  .main {
+    .ul-one {
+      border-bottom: 1px solid rgba(147, 173, 200, 0.2);
+      //   display: flex;
+      overflow: hidden;
+      li {
+        float: left;
+        // margin: 10px 20px 10px 20px;
+        margin: 10px 0;
+        width: 25%;
+
+        span:nth-child(2) {
+          color: #409eff;
+        }
+
+        .apply {
+          width: 60px;
+        }
       }
     }
   }
-  .dialog_daily {
-    .dialog_daily_header {
-      position: relative;
-      .date {
-        .date_week {
-          width: 60px;
-          height: 35px;
-          padding-left: 10px;
-          padding-top: 5px;
-          text-align: right;
-          border-top: 2px solid #2492ff;
-          border-left: 2px solid #2492ff;
-          span:nth-child(2) {
-            font-size: 30px;
-            font-weight: 600;
-          }
-        }
-        .date_ymd {
-          margin-left: 50px;
-          width: 80px;
-          height: 30px;
-          padding-right: 5px;
-          border-right: 2px solid #2492ff;
-          border-bottom: 2px solid #2492ff;
-          text-align: right;
-          line-height: 40px;
-          font-weight: 600;
-        }
-      }
-      .title {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 10px;
-        width: 80px;
-        height: 35px;
-        border: 2px dashed #242424;
-        border-radius: 10px;
-        line-height: 35px;
-        padding: 0 5px;
-        text-align: center;
-        font-size: 18px;
-      }
+
+  .footer {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 30px 20px 20px 20px;
+
+    .title {
+      font-size: 20px;
+      margin-bottom: 10px;
     }
-    .dialog_daily_table {
-      margin-top: 10px;
-      table {
-        border: black;
-        width: 100%;
-        th {
-          font-size: 17px;
-          background-color: #4f81bd;
-          color: black;
-          padding: 5px;
-        }
-        td {
-          text-align: center;
-          padding: 5px;
-        }
-      }
+
+    .invoice_span {
+      padding: 3px 5px;
+      color: #fff;
+      background-color: #409eff;
+      margin-right: 3px;
+    }
+
+    i {
+      font-size: 20px;
+      cursor: pointer;
+      color: #6b91cc;
     }
   }
 }
